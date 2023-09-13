@@ -9,6 +9,7 @@ import lombok.Setter;
 public class UserJoinRequestDto {
 
     private Long user_number;
+
     private String user_name;
     private String ajou_mail;
     private String login_id;
