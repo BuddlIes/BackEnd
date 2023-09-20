@@ -37,7 +37,7 @@ public class UserInfo {
     @Column private Long vol_hour;
     @Column private Long vol_num;
 
-    @Column private Integer temperature;
+    @Column private Double temperature;
     @Column private Integer compliment_num;
     @Column private Integer alarm;
 
