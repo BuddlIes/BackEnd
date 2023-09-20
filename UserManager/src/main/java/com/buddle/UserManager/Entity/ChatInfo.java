@@ -13,15 +13,19 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @Entity
-@Table(name = "messages")
-public class Messages {
+@Table(name = "chat_info")
+public class ChatInfo {
     @Id
-    @Column
-    private Long id;
+    @Column(unique = true)
+    private Long chatRoom_id;
 
-    @Column private Long chatRoom_id;
-    @Column private Long message_id;
+    @Column(unique = true) private Long message_id;
     @Column private String message_content;
     @Column private Long message_from;
     @Column private Long created_at;
+
+    @Column private Long user1_number;
+    @Column private Long user2_number;
+    @Column private Long user1_out_time; //user1이 채팅방 나간(삭제한) 시간
+    @Column private Long user2_out_time; //user2rk 채팅방 나간(삭제한) 시간
 }
