@@ -20,9 +20,9 @@ public class UserLoginRequestDto {
         UserInfo userInfo = new UserInfo();
         userInfo.setUser_number(this.user_number);
         userInfo.setName(this.user_name);
-        userInfo.setAjou_email(this.ajou_email);
+        userInfo.setEmail(this.ajou_email);
         userInfo.setPassword(this.password);
-        userInfo.setUser_nickname(this.user_nickname);
+        userInfo.setNickname(this.user_nickname);
         return userInfo;
     }
 }

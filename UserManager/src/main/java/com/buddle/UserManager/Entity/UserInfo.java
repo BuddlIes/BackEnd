@@ -24,10 +24,10 @@ public class UserInfo {
     private Long user_number; //학번 및 사번 //중복X
 
     @Column private String name;
-    @Column(unique = true) private String ajou_email; //중복X
+    @Column(unique = true) private String email; //중복X
     @Column private String password;
-    @Column(unique = true) private String wallet_address; //중복X
-    @Column(unique = true) private String user_nickname; //중복X
+    @Column(unique = true) private String wallet; //중복X
+    @Column(unique = true) private String nickname; //중복X
 
     @Column private Integer delete_yn; //탈퇴 1 & 미탈퇴 0
     @Column private String created_data; //가입 일시
