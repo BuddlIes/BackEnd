@@ -32,6 +32,7 @@ public class UserService {
         }
     }
 
+    //로그인 확인
     public String login(UserLoginRequestDto users) {
         Optional<UserInfo> optUserInfo = userRepository.findByEmail(users.getAjou_email());
         if(optUserInfo.isPresent()){ //이메일이 있으면

@@ -8,21 +8,21 @@ import lombok.Setter;
 @Setter
 public class UserLoginRequestDto {
 
-    private Long user_number;
-
-    private String user_name;
+//    private Long user_number;
+//    private String user_name;
     private String ajou_email;
-    private String login_id;
     private String password;
-    private String user_nickname;
+//    private String user_nickname;
+    private Long recent_access;
 
     public UserInfo toEntity() {
         UserInfo userInfo = new UserInfo();
-        userInfo.setUser_number(this.user_number);
-        userInfo.setName(this.user_name);
-        userInfo.setAjou_email(this.ajou_email);
+//        userInfo.setUser_number(this.user_number);
+//        userInfo.setName(this.user_name);
+        userInfo.setEmail(this.ajou_email);
         userInfo.setPassword(this.password);
-        userInfo.setUser_nickname(this.user_nickname);
+//        userInfo.setNickname(this.user_nickname);
+        userInfo.setRecent_access(this.recent_access);
         return userInfo;
     }
 }
