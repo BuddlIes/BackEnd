@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Table(name = "message_info")
 public class MessageInfo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
     private Long id;
 
