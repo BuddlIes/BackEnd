@@ -6,14 +6,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserJoinRequestDto {
+public class UserLoginRequestDto {
 
     private Long user_number;
 
     private String user_name;
     private String ajou_email;
     private String login_id;
-    private String wallet_address;
     private String password;
     private String user_nickname;
 
@@ -22,10 +21,8 @@ public class UserJoinRequestDto {
         userInfo.setUser_number(this.user_number);
         userInfo.setName(this.user_name);
         userInfo.setAjou_email(this.ajou_email);
-        userInfo.setWallet_address(this.wallet_address);
         userInfo.setPassword(this.password);
         userInfo.setUser_nickname(this.user_nickname);
         return userInfo;
     }
-
 }

@@ -13,15 +13,14 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @Entity
-@Table(name = "messages")
-public class Messages {
+@Table(name = "message_info")
+public class MessageInfo {
     @Id
-    @Column
+    @Column(unique = true)
     private Long id;
 
     @Column private Long chatRoom_id;
     @Column private Long message_id;
     @Column private String message_content;
-    @Column private Long message_from;
     @Column private Long created_at;
 }

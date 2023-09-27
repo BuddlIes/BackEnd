@@ -1,13 +1,13 @@
 package com.buddle.UserManager.Service;
 
 import com.buddle.UserManager.Dto.UserJoinRequestDto;
+import com.buddle.UserManager.Dto.UserLoginRequestDto;
 import com.buddle.UserManager.Entity.UserInfo;
-import com.buddle.UserManager.Repository.MemoryUserRepository;
 import com.buddle.UserManager.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -18,34 +18,35 @@ public class UserService {
 
     //회원가입 확인
     public String join(UserJoinRequestDto users) {
-        Optional<UserInfo> optUserInfo = userRepository.findById(users.getUser_number());
-        if(optUserInfo.isEmpty()){ //같은 게 없으면
+        Optional<UserInfo> optUserId = userRepository.findById(users.getUser_number());
+        Optional<UserInfo> optUserEmail = userRepository.findByEmail(users.getAjou_email());
+        Optional<UserInfo> optWallet = userRepository.findByWallet(users.getWallet_address());
+        Optional<UserInfo> optNickname = userRepository.findByNickname(users.getUser_nickname());
+
+        if(optUserId.isEmpty() && optUserEmail.isEmpty() && optWallet.isEmpty() && optNickname.isEmpty()){ //같은 게 없으면
             userRepository.save(users.toEntity());
-            return "Completed";
+            return "Join Completed";
         }
         else {
-            return "Already Registered";
+            return "Cannot Join";
         }
     }
 
+    public String login(UserLoginRequestDto users) {
+        Optional<UserInfo> optUserInfo = userRepository.findByEmail(users.getAjou_email());
+        if(optUserInfo.isPresent()){ //이메일이 있으면
+            UserInfo userInfo = optUserInfo.get();
 
-//    //회원가입
-//    public Long join(UserInfo users) {
-//        validateDuplicateUser(users); //중복 회원 검증
-//        userRepository.save(users);
-//        return users.getUser_number();
-//    }
-//
-//    private void validateDuplicateUser(UserInfo users) {
-//        userRepository.findByName(users.getUser_name());
-//    }
-//
-//    //회원 전체 조회
-//    public List<UserInfo> findUsers() {
-//        return userRepository.findAll();
-//    }
-//
-//    public Optional<UserInfo> findOne(Long userId) {
-//        return userRepository.findById(userId);
-//    }
+            //데베에서 가져온 비번과 입력받은 비번 비교
+            if (userInfo.getPassword().equals(users.getPassword())) {
+                return "Login Completed";
+            }
+            else {
+                return "Info is Wrong";
+            }
+        }
+        else {
+            return "Email is not found";
+        }
+    }
 }
