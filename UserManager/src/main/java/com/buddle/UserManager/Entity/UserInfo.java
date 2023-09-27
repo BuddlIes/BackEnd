@@ -31,6 +31,7 @@ public class UserInfo {
 
     @Column private Integer delete_yn; //탈퇴 1 & 미탈퇴 0
     @Column private Long created_data; //가입 일시
+    @Column private Long recent_access; //최근 로그인 시
     @Column private String modified_data; //회원정보 수정일시
 
     @Column private Long vol_hour; //봉사시간
