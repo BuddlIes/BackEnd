@@ -2,6 +2,7 @@ package com.buddle.UserManager.Service;
 
 import com.buddle.UserManager.Dto.ChatRoomDto;
 import com.buddle.UserManager.Dto.MsgDto;
+import com.buddle.UserManager.Dto.SendMsgDto;
 import com.buddle.UserManager.Dto.UserJoinRequestDto;
 import com.buddle.UserManager.Entity.ChatListInfo;
 import com.buddle.UserManager.Entity.MessageInfo;
@@ -74,7 +75,7 @@ public class ChatService {
 //        }
     }
 
-//    메세지 내용 확인
+    //메세지 내용 확인
     public List<MsgDto> checkMsgList(Long chatRoomId) {
         List<MessageInfo> msgInfos = msgRepository.findByChatroomidOrderByCreatedat(chatRoomId);
 
@@ -83,9 +84,11 @@ public class ChatService {
                 ).collect(Collectors.toList());
         return msgDtoList;
     }
-//
-//    //메세지 전송
-//    public String sendMsg(UserJoinRequestDto users) {
-//
-//    }
+
+    //메세지 전송
+    public String sendMsg(SendMsgDto msg) {
+        msgRepository.save(msg.toEntity());
+        return "OK";
+
+    }
 }

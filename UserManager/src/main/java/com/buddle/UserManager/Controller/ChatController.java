@@ -2,12 +2,10 @@ package com.buddle.UserManager.Controller;
 
 import com.buddle.UserManager.Dto.ChatRoomDto;
 import com.buddle.UserManager.Dto.MsgDto;
+import com.buddle.UserManager.Dto.SendMsgDto;
 import com.buddle.UserManager.Service.ChatService;
-import com.buddle.UserManager.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +24,12 @@ public class ChatController {
     public List<MsgDto> getMessageList(@RequestParam Long chatRoomId)
     {
         return chatService.checkMsgList(chatRoomId);
+    }
+
+    @PostMapping("/chat/send_message")
+    public String getSendMsg(@RequestBody SendMsgDto reqDto)
+    {
+        return chatService.sendMsg(reqDto);
     }
 
 }
