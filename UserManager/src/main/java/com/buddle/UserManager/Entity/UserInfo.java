@@ -30,7 +30,7 @@ public class UserInfo {
     @Column(unique = true) private String nickname; //중복X
 
     @Column private Integer delete_yn; //탈퇴 1 & 미탈퇴 0
-    @Column private String created_data; //가입 일시
+    @Column private Long created_data; //가입 일시
     @Column private String modified_data; //회원정보 수정일시
 
     @Column private Long vol_hour; //봉사시간
