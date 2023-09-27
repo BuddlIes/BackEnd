@@ -3,19 +3,22 @@ package com.buddle.UserManager.Service;
 import com.buddle.UserManager.Dto.ReviewRequestDto;
 import com.buddle.UserManager.Entity.UserInfo;
 import com.buddle.UserManager.Repository.UserRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class ReviewServiceTest {
 
     ReviewService reviewService;
-    UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @BeforeEach
     private void beforeEach(){
-        userRepository = new MemoryUserRepository();
+        userRepository.deleteAll();
         reviewService = new ReviewService(userRepository);
     }
 
@@ -24,11 +27,11 @@ public class ReviewServiceTest {
 
         //given
         UserInfo user1 = new UserInfo();
-        user1.setUser_number("202020810");
+        user1.setUser_number(202020810L);
         user1.setTemperature(36.5);
 
         UserInfo user2 = new UserInfo();
-        user2.setUser_number("201924503");
+        user2.setUser_number(201924503L);
         user2.setTemperature(36.5);
 
         ReviewRequestDto.Measure measure = ReviewRequestDto.Measure.GOOD;
