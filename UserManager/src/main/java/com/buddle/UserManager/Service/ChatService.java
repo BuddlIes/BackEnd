@@ -1,6 +1,7 @@
 package com.buddle.UserManager.Service;
 
 import com.buddle.UserManager.Dto.ChatRoomDto;
+import com.buddle.UserManager.Dto.MsgDto;
 import com.buddle.UserManager.Dto.UserJoinRequestDto;
 import com.buddle.UserManager.Entity.ChatListInfo;
 import com.buddle.UserManager.Entity.MessageInfo;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatService {
@@ -33,12 +35,12 @@ public class ChatService {
         {
             ChatRoomDto chatRoomDto = new ChatRoomDto();
             chatRoomDto.setChatRoomId(chatRoom.getChatRoom_id());
-            Optional<UserInfo> oponentUser = userRepository.findById(memberId==chatRoom.getUser1_num()?chatRoom.getUser2_num():chatRoom.getUser1_num());
+//            System.out.println(memberId.equals(chatRoom.getUser1_num())?chatRoom.getUser2_num():chatRoom.getUser1_num());
+            Optional<UserInfo> oponentUser = userRepository.findById(memberId.equals(chatRoom.getUser1_num())?chatRoom.getUser2_num():chatRoom.getUser1_num());
             chatRoomDto.setOponentName(oponentUser.get().getName());
             List<MessageInfo> messageInfos = msgRepository.findTopByChatroomidOrderByCreatedatDesc(chatRoom.getChatRoom_id());
             MessageInfo msg = messageInfos.get(0);
 
-//            Optional<MessageInfo> messageInfo = msgRepository.findByChatId(chatRoom.getChatRoom_id());
             chatRoomDto.setLastMessage(msg.getMessagecontent());
             chatRoomDto.setLastMessageTime(msg.getCreatedat());
             listChatRoom.add(chatRoomDto);
@@ -48,9 +50,9 @@ public class ChatService {
             @Override
             public int compare(ChatRoomDto o1, ChatRoomDto o2) {
                 if(o1.getLastMessageTime() <= o2.getLastMessageTime())
-                    return -1;
-                else
                     return 1;
+                else
+                    return -1;
             }
         });
         return listChatRoom;
@@ -72,10 +74,15 @@ public class ChatService {
 //        }
     }
 
-    //메세지 내용 확인
-//    public String checkMsgContent(UserJoinRequestDto users) {
-//
-//    }
+//    메세지 내용 확인
+    public List<MsgDto> checkMsgList(Long chatRoomId) {
+        List<MessageInfo> msgInfos = msgRepository.findByChatroomidOrderByCreatedat(chatRoomId);
+
+        List<MsgDto> msgDtoList = msgInfos.stream().map(
+                m-> new MsgDto(m.getId(),m.getChatroomid(),m.getCreatedat(),m.getMessagecontent(),m.getMessagefrom())
+                ).collect(Collectors.toList());
+        return msgDtoList;
+    }
 //
 //    //메세지 전송
 //    public String sendMsg(UserJoinRequestDto users) {

@@ -16,6 +16,7 @@ public interface ChatListRepository extends JpaRepository<ChatListInfo, Long> {
 
     List<ChatListInfo> findAll();
 
+
     @Query("Select m from ChatListInfo m where m.user1_num = :member_num or m.user2_num = :member_num")
     List<ChatListInfo> findChatRooms(@Param("member_num") Long member_num);
 }
