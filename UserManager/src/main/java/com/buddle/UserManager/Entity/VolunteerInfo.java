@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "volList_info")
 public class VolunteerInfo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)

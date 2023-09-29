@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "message_info")
 public class MessageInfo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)

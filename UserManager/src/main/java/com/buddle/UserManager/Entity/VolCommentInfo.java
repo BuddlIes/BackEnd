@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "vol_comment_info")
 public class VolCommentInfo {
+
     @Id
     @Column(unique = true)
     private Long id;
