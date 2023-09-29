@@ -32,4 +32,6 @@ public class VolunteerInfo {
     @Column private Long completed; //완료 0, 미완료 1
 
     @Column private Long likes; //관심 등록 수
+
+    @Column private Long chatNum; //받은 채팅 수
 }
