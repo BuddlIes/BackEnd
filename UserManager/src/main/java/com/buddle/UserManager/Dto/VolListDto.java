@@ -1,6 +1,5 @@
 package com.buddle.UserManager.Dto;
 
-import com.buddle.UserManager.Entity.UserInfo;
 import com.buddle.UserManager.Entity.VolunteerInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
