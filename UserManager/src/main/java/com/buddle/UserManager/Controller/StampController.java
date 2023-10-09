@@ -17,9 +17,9 @@ public class StampController {
     public StampDto getStamp(@RequestParam Long user_number, @RequestParam Long stamp_id) {return stampService.getStamp(user_number, stamp_id);}
     //GET으로 하면 body 말고 html 쪽으로 나간다.
 
-//    @GetMapping("stamp/get_stamp_list")
-//    public List<StampDto> getStampList(@RequestParam Long user_number){return stampService.getStampList(user_number);
-//    }
+    @GetMapping("stamp/get_stamp_list")
+    public List<StampDto> getStampList(@RequestParam Long user_number){return stampService.getStampList(user_number);
+    }
 
 
 }

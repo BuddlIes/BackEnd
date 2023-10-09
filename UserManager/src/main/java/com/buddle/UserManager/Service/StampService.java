@@ -7,11 +7,14 @@ import com.buddle.UserManager.Entity.UserInfo;
 import com.buddle.UserManager.Repository.StampAcquireRepository;
 import com.buddle.UserManager.Repository.StampRepository;
 import com.buddle.UserManager.Repository.UserRepository;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Stack;
 
 @Service
 public class StampService {
@@ -66,7 +69,34 @@ public class StampService {
     }
 
     /*어떤 유저의 스탬프들의 획득 여부 정보를 모두 리턴함*/
-//    public List<StampDto> getStampList(Long stampDto) {
-//
-//    }
+    public List<StampDto> getStampList(Long user_number) {
+
+        //StampInfo를 조회하되, join으로 StampAcquireInfo를 사용하고, 조건은 user_number == a.user_number
+        List<Object[]> all = stampRepository.findStampInfoListWithAcquire(user_number);
+
+        //StampDto로 만들어서 리턴
+        List<StampDto> stampDtoList = new ArrayList<>();
+
+        for (Object[] one : all) {
+
+            StampDto stampDto = new StampDto();
+            stampDto.setStamp_id( ((StampInfo)one[0]).getStamp_id() );
+            stampDto.setStamp_name( ((StampInfo)one[0]).getStamp_name() );
+            stampDto.setStamp_type( ((StampInfo)one[0]).getStamp_type() );
+            stampDto.setLogin_number( ((StampInfo)one[0]).getLogin_number() );
+            stampDto.setPost_number( ((StampInfo)one[0]).getPost_number() );
+            stampDto.setComment_number( ((StampInfo)one[0]).getComment_number() );
+            stampDto.setDo_volunteer_number( ((StampInfo)one[0]).getDo_volunteer_number() );
+            stampDto.setHad_volunteer_number( ((StampInfo)one[0]).getHad_volunteer_number() );
+            stampDto.setReview_number( ((StampInfo)one[0]).getReview_number() );
+
+            stampDto.setAcquire_id( ((StampAcquireInfo)one[1]).getAcquire_id() );
+            stampDto.setAcquire_time( ((StampAcquireInfo)one[1]).getAcquire_time() );
+
+            stampDtoList.add(stampDto);
+        }
+
+        return stampDtoList;
+
+    }
 }
