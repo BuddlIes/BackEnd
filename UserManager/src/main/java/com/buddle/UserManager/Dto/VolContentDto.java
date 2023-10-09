@@ -29,22 +29,4 @@ public class VolContentDto {
 
     private Long chatNum; //받은 채팅 수
 
-//    public VolunteerInfo toEntity() {
-//        VolunteerInfo volInfo = new VolunteerInfo();
-//        volInfo.setVolunteerId(this.volunteerId);
-//        volInfo.setWriter(this.writer);
-//        volInfo.setHashtag(this.hashtag);
-//        volInfo.setTitle(this.title);
-//        volInfo.setDetailed(this.detailed);
-//        volInfo.setImg(this.img);
-//        volInfo.setWriteTime(this.writeTime);
-//        volInfo.setVolTime(this.volTime);
-//        volInfo.setPlace(this.place);
-//        volInfo.setWhoVol(this.whoVol);
-//        volInfo.setCompleted(this.completed);
-//        volInfo.setLikes(this.likes);
-//        volInfo.setChatNum(this.chatNum);
-//
-//        return volInfo;
-//    }
 }
