@@ -18,13 +18,25 @@ public class VolService {
     @Autowired
     VolListRepository volListRepository;
 
-    public List<VolListDto> checkVolList(Long volunteerId, String hashTag) {
-        List<VolunteerInfo> volInfos = volListRepository.findTopByVolunteerIdOrderByWriteTime(volunteerId);
-        List<VolunteerInfo> volInfosHashtag = volListRepository.findByhashTagOrderByWriteTime(hashTag);
+    public List<VolListDto> checkVolList(String hashtag) {
+        List<VolunteerInfo> volInfosByHashTag = volListRepository.findByhashTagOrderByWriteTime(hashtag);
+        List<VolunteerInfo> volAllInfos = volListRepository.findTopByVolunteerIdOrderByWriteTime(hashtag);
 
-        List<VolListDto> volDtoList = volInfos.stream().map(
-                m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(),m.getVolTime(), m.getPlace())
-        ).collect(Collectors.toList());
-        return volDtoList;
+        if(hashtag=="all")
+        {
+            List<VolListDto> allVolList = volAllInfos.stream().map(
+                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
+            ).collect(Collectors.toList());
+            return allVolList;
+        }
+        else
+        {
+            List<VolListDto> volListByHashTag = volInfosByHashTag.stream().map(
+                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
+            ).collect(Collectors.toList());
+            return volListByHashTag;
+        }
+
+
     }
 }
