@@ -16,9 +16,9 @@ public interface VolListRepository extends JpaRepository<VolunteerInfo, Long> {
 
     List<VolunteerInfo> findAll();
 
-    List<VolunteerInfo> findTopByVolunteerIdOrderByWriteTime(String hashTag);
+    List<VolunteerInfo> findByVolunteerIdOrderByWriteTime(String hashTag);
 
     /* 완료된 봉사는 제거하는 쿼리 추가해야함! */
-    @Query("Select m from VolunteerInfo m where m.hashtag = :hashTag order by m.writeTime")
+    @Query("Select m from VolunteerInfo m where m.hashtag = :hashTag and m.completed = 1 order by m.writeTime")
     List<VolunteerInfo> findByhashTagOrderByWriteTime(@Param("hashTag") String hashTag);
 }

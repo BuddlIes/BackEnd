@@ -20,7 +20,7 @@ public class VolService {
 
     public List<VolListDto> checkVolList(String hashtag) {
         List<VolunteerInfo> volInfosByHashTag = volListRepository.findByhashTagOrderByWriteTime(hashtag);
-        List<VolunteerInfo> volAllInfos = volListRepository.findTopByVolunteerIdOrderByWriteTime(hashtag);
+        List<VolunteerInfo> volAllInfos = volListRepository.findByVolunteerIdOrderByWriteTime(hashtag);
 
         if(hashtag=="all")
         {

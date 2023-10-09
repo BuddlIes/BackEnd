@@ -30,7 +30,7 @@ public class VolunteerInfo {
     @Column private Long volTime; //봉사 요청일시
     @Column private String place;
     @Column private Long whoVol; //봉사자
-    @Column private Long completed; //완료 0, 미완료 1
+    @Column private Integer completed; //완료 0, 미완료 1
 
     @Column private Long likes; //관심 등록 수
 
