@@ -23,7 +23,7 @@ public class VolContentDto {
     private Long volTime; //봉사 요청일시
     private String place;
     private Long whoVol; //봉사자
-    private Long completed; //완료 0, 미완료 1
+    private Integer completed; //완료 0, 미완료 1
 
     private Long likes; //관심 등록 수
 

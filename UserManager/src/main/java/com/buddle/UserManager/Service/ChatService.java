@@ -57,22 +57,7 @@ public class ChatService {
             }
         });
         return listChatRoom;
-//        Optional<ChatListInfo> optChatRoomId = chatListRepository.findByRoomId();
-//        Optional<ChatListInfo> optUser1 = chatListRepository.findByUser1(users.getUser_number());
-//        Optional<ChatListInfo> optUser2 = chatListRepository.findByUser2(users.getUser_number());
-//
-//        Optional<MessageInfo> optChatId = msgRepository.findByChatId(users.getUser_number());
-//        Optional<MessageInfo> optMsgId = msgRepository.findByMsgId(users.getUser_number());
-//        Optional<MessageInfo> optMsgContent = msgRepository.findByMsgContent(users.getUser_number());
-//        Optional<MessageInfo> optTime = msgRepository.findByCreatedTime(users.getUser_number());
-//
-//        if(optUserId.isEmpty() && optUserEmail.isEmpty() && optWallet.isEmpty() && optNickname.isEmpty()){ //같은 게 없으면
-//            userRepository.save(users.toEntity());
-//            return "Join Completed";
-//        }
-//        else {
-//            return "Cannot Join";
-//        }
+
     }
 
     //메세지 내용 확인
