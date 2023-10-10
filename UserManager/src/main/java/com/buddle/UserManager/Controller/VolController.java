@@ -46,4 +46,10 @@ public class VolController {
         return commentService.checkCommentsList(volunteerId);
     }
 
+    @PostMapping("/volunteer/write_comment")
+    public String getWriteComment(@RequestBody SendMsgDto reqDto)
+    {
+        return chatService.sendMsg(reqDto);
+    }
+
 }

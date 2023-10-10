@@ -1,6 +1,7 @@
 package com.buddle.UserManager.Service;
 
 import com.buddle.UserManager.Dto.MsgDto;
+import com.buddle.UserManager.Dto.SendMsgDto;
 import com.buddle.UserManager.Dto.VolCommentDto;
 import com.buddle.UserManager.Entity.MessageInfo;
 import com.buddle.UserManager.Entity.VolCommentInfo;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class CommentService {
     @Autowired
     CommentRepository commentRepository;
+
     public List<VolCommentDto> checkCommentsList(Long volunteerId) {
         List<VolCommentInfo> commentInfos = commentRepository.findComments(volunteerId);
 
@@ -24,5 +26,11 @@ public class CommentService {
         ).collect(Collectors.toList());
 
         return commentDtoList;
+    }
+
+    public String writeComment(VolCommentDto commentDto) {
+        commentRepository.save(commentDto.toEntity());
+
+        return "Write Completed";
     }
 }
