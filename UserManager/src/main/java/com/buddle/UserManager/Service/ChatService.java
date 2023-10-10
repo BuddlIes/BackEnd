@@ -56,8 +56,8 @@ public class ChatService {
                     return -1;
             }
         });
-        return listChatRoom;
 
+        return listChatRoom;
     }
 
     //메세지 내용 확인
@@ -67,13 +67,14 @@ public class ChatService {
         List<MsgDto> msgDtoList = msgInfos.stream().map(
                 m-> new MsgDto(m.getId(),m.getChatroomid(),m.getCreatedat(),m.getMessagecontent(),m.getMessagefrom())
                 ).collect(Collectors.toList());
+
         return msgDtoList;
     }
 
     //메세지 전송
     public String sendMsg(SendMsgDto msg) {
         msgRepository.save(msg.toEntity());
-        return "OK";
 
+        return "Send Completed";
     }
 }

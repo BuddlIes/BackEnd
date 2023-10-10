@@ -1,7 +1,5 @@
 package com.buddle.UserManager.Dto;
 
-
-import com.buddle.UserManager.Entity.MessageInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

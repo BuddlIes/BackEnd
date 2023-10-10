@@ -1,8 +1,6 @@
 package com.buddle.UserManager.Service;
 
-import com.buddle.UserManager.Dto.MsgDto;
-import com.buddle.UserManager.Dto.VolContentDto;
-import com.buddle.UserManager.Dto.VolListDto;
+import com.buddle.UserManager.Dto.*;
 import com.buddle.UserManager.Entity.VolunteerInfo;
 import com.buddle.UserManager.Repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,7 @@ public class VolService {
             List<VolListDto> allVolList = volAllInfos.stream().map(
                     m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
             ).collect(Collectors.toList());
+
             return allVolList;
         }
         else
@@ -33,6 +32,7 @@ public class VolService {
             List<VolListDto> volListByHashTag = volInfosByHashTag.stream().map(
                     m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
             ).collect(Collectors.toList());
+
             return volListByHashTag;
         }
     }
@@ -61,5 +61,11 @@ public class VolService {
 
         return volDto;
 
+    }
+
+    public String registerVol(VolUploadRequestDto vol) {
+        volRepository.save(vol.toEntity());
+
+        return "Register Completed";
     }
 }

@@ -1,6 +1,5 @@
 package com.buddle.UserManager.Repository;
 
-import com.buddle.UserManager.Entity.UserInfo;
 import com.buddle.UserManager.Entity.VolunteerInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

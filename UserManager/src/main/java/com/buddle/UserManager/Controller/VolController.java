@@ -1,13 +1,12 @@
 package com.buddle.UserManager.Controller;
 
-import com.buddle.UserManager.Dto.ChatRoomDto;
-import com.buddle.UserManager.Dto.MsgDto;
-import com.buddle.UserManager.Dto.VolContentDto;
-import com.buddle.UserManager.Dto.VolListDto;
+import com.buddle.UserManager.Dto.*;
 import com.buddle.UserManager.Service.ChatService;
 import com.buddle.UserManager.Service.VolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -29,6 +28,12 @@ public class VolController {
     public VolContentDto getVolunteerContent(@RequestParam Long volunteerId)
     {
         return volService.checkVolContent(volunteerId);
+    }
+
+    @PostMapping("/volunteer/register_vol")
+    public String getRegisterVolunteer(@RequestBody VolUploadRequestDto reqDto)
+    {
+        return volService.registerVol(reqDto);
     }
 
 }
