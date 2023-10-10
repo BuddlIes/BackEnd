@@ -2,6 +2,7 @@ package com.buddle.UserManager.Controller;
 
 import com.buddle.UserManager.Dto.*;
 import com.buddle.UserManager.Service.ChatService;
+import com.buddle.UserManager.Service.CommentService;
 import com.buddle.UserManager.Service.VolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,9 @@ public class VolController {
 
     @Autowired
     VolService volService;
+
+    @Autowired
+    CommentService commentService;
 
     //봉사 게시물 리스트 보기
     @GetMapping("/volunteer/get_volunteer_list")
@@ -34,6 +38,12 @@ public class VolController {
     public String getRegisterVolunteer(@RequestBody VolUploadRequestDto reqDto)
     {
         return volService.registerVol(reqDto);
+    }
+
+    @GetMapping("/volunteer/get_comment_list")
+    public List<VolCommentDto> getCommentList(@RequestParam Long volunteerId)
+    {
+        return commentService.checkCommentsList(volunteerId);
     }
 
 }
