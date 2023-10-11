@@ -47,9 +47,9 @@ public class VolController {
     }
 
     @PostMapping("/volunteer/write_comment")
-    public String getWriteComment(@RequestBody SendMsgDto reqDto)
+    public String getWriteComment(@RequestBody VolCommentDto reqDto)
     {
-        return chatService.sendMsg(reqDto);
+        return commentService.writeComment(reqDto);
     }
 
 }
