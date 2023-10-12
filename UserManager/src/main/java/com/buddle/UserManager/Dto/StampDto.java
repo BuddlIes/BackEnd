@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,5 +27,5 @@ public class StampDto {
 
     //StampAcquireInfo에서 온 필드
     private Long acquire_id;
-    private Long acquire_time;
+    private LocalDateTime acquire_time;
 }

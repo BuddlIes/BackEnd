@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -30,6 +31,6 @@ public class StampAcquireInfo {
     @Column private Long userNumber;
     @Column private Long stampId;
 
-    @Column private Long acquire_time;
+    @Column private LocalDateTime acquire_time;
 
 }

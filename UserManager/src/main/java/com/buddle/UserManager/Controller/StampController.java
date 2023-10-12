@@ -13,6 +13,9 @@ public class StampController {
     @Autowired
     StampService stampService;
 
+    @GetMapping ("stamp/acquire_stamp")
+    public Integer acquireStamp(@RequestParam Long user_number, @RequestParam Long stamp_id) {return stampService.acquireStamp(user_number, stamp_id);}
+
     @GetMapping("stamp/get_stamp")
     public StampDto getStamp(@RequestParam Long user_number, @RequestParam Long stamp_id) {return stampService.getStamp(user_number, stamp_id);}
     //GET으로 하면 body 말고 html 쪽으로 나간다.
