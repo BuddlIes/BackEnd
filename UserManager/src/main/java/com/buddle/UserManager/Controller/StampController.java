@@ -18,7 +18,7 @@ public class StampController {
     @PostMapping("stamp/check_condition")
     public Boolean checkAcquireStamp(@RequestBody StampRequestDto reqDto){return stampService.checkAcquireStamp(reqDto);}
     @PostMapping ("stamp/acquire_stamp")
-    public Integer acquireStamp(@RequestBody StampRequestDto reqDto) {return stampService.acquireStamp(reqDto);}
+    public Boolean acquireStamp(@RequestBody StampRequestDto reqDto) {return stampService.acquireStamp(reqDto);}
 
     @GetMapping("stamp/get_stamp")
     public StampDto getStamp(@RequestParam Long user_number, @RequestParam Long stamp_id) {return stampService.getStamp(user_number, stamp_id);}

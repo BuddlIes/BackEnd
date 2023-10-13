@@ -67,7 +67,7 @@ public class StampService {
     }
 
     /*스탬프 힉득 정보를 DB에 저장함*/
-    public Integer acquireStamp(StampRequestDto reqDto){
+    public Boolean acquireStamp(StampRequestDto reqDto){
 
         //StampAcquireInfo 만들기
         StampAcquireInfo stampAcquireInfo = new StampAcquireInfo();
@@ -78,7 +78,7 @@ public class StampService {
         //스탬프의 획득 정보 저장
         stampAcquireRepository.save(stampAcquireInfo);
 
-        return 1;
+        return true;
     }
 
     /*어떤 유저가 어떤 스탬프를 획득한 상태인지 확인하고 그 정보를 리턴함*/
