@@ -1,6 +1,8 @@
 package com.buddle.UserManager.Controller;
 
 import com.buddle.UserManager.Dto.StampDto;
+import com.buddle.UserManager.Dto.StampRequestDto;
+import com.buddle.UserManager.Dto.UserLoginRequestDto;
 import com.buddle.UserManager.Service.StampService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +15,10 @@ public class StampController {
     @Autowired
     StampService stampService;
 
-    @GetMapping ("stamp/acquire_stamp")
-    public Integer acquireStamp(@RequestParam Long user_number, @RequestParam Long stamp_id) {return stampService.acquireStamp(user_number, stamp_id);}
+    @PostMapping("stamp/check_condition")
+    public Boolean checkAcquireStamp(@RequestBody StampRequestDto reqDto){return stampService.checkAcquireStamp(reqDto);}
+    @PostMapping ("stamp/acquire_stamp")
+    public Integer acquireStamp(@RequestBody StampRequestDto reqDto) {return stampService.acquireStamp(reqDto);}
 
     @GetMapping("stamp/get_stamp")
     public StampDto getStamp(@RequestParam Long user_number, @RequestParam Long stamp_id) {return stampService.getStamp(user_number, stamp_id);}

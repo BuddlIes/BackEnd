@@ -1,8 +1,11 @@
 package com.buddle.UserManager.Service;
 
 import com.buddle.UserManager.Dto.StampDto;
+import com.buddle.UserManager.Dto.StampRequestDto;
 import com.buddle.UserManager.Entity.StampAcquireInfo;
+import com.buddle.UserManager.Entity.StampConstant;
 import com.buddle.UserManager.Entity.StampInfo;
+import com.buddle.UserManager.Entity.UserInfo;
 import com.buddle.UserManager.Repository.StampAcquireRepository;
 import com.buddle.UserManager.Repository.StampRepository;
 import com.buddle.UserManager.Repository.UserRepository;
@@ -26,18 +29,50 @@ public class StampService {
     @Autowired
     UserRepository userRepository;
 
-    /**/
-    private void checkAcquireStamp(){
+    /*이 스탬프의 획득 조건을 만족하는 지 확인함*/
+    public Boolean checkAcquireStamp(StampRequestDto reqDto){
 
+        //UserInfo 가져오기
+        Optional<UserInfo> optUserInfo = userRepository.findById(reqDto.getUser_number());
+        if(optUserInfo.isEmpty()){return false;}
+
+        //StampInfo 가져오기
+        Optional<StampInfo> optStampInfo = stampRepository.findById(reqDto.getStamp_id());
+        if(optStampInfo.isEmpty()){return false;}
+        Integer stamp_type = optStampInfo.get().getStamp_type();
+
+        //longin 횟수 체크하기
+        if( (stamp_type & StampConstant.STAMP_TYPE_LOGIN) > 0) {
+            if ( (optUserInfo.get().getLogin_num().intValue()) != (optStampInfo.get().getLogin_number().intValue()) ) {
+                return false;
+            }
+        }
+
+        //post 횟수 체크하기
+
+        //comment 횟수 체크하기
+
+        //봉사자 참여 수 체크하기
+        if( (stamp_type & StampConstant.STAMP_TYPE_DO_VOL) > 0) {
+            if ( (optUserInfo.get().getVol_num().intValue()) != (optStampInfo.get().getDo_volunteer_number().intValue()) ) {
+                return false;
+            }
+        }
+
+        //수혜자 참여 수 체크하기
+
+        //review 횟수 체크하기
+
+        return true;
     }
 
     /*스탬프 힉득 정보를 DB에 저장함*/
-    public Integer acquireStamp(Long user_number, Long stamp_id){
+    public Integer acquireStamp(StampRequestDto reqDto){
 
         //StampAcquireInfo 만들기
         StampAcquireInfo stampAcquireInfo = new StampAcquireInfo();
-        stampAcquireInfo.setStampId(stamp_id);
-        stampAcquireInfo.setUserNumber(user_number);
+        stampAcquireInfo.setStampId(reqDto.getStamp_id());
+        stampAcquireInfo.setUserNumber(reqDto.getUser_number());
         stampAcquireInfo.setAcquire_time(LocalDateTime.now());
 
         //스탬프의 획득 정보 저장
@@ -51,6 +86,7 @@ public class StampService {
 
         //StampAcquireInfo를 조희해서 이 유저가 이 스탬프를 획득했는지 확인
         Optional<StampAcquireInfo> optStampAcquireInfo = stampAcquireRepository.findByUserNumberAndStampId(user_number, stamp_id);
+        if(optStampAcquireInfo.isEmpty()){ return new StampDto();}
 
         //획득 안했다면 안했음을 알림
         StampDto stampDto = new StampDto();
@@ -60,6 +96,7 @@ public class StampService {
 
         //획득 했다면 StampInfo를 조회해서 가져옴
         Optional<StampInfo> optStampInfo = stampRepository.findById(optStampAcquireInfo.get().getStampId());
+        if(optStampInfo.isEmpty()){ return new StampDto();}
 
         //StampInfo와 StampAcquireInfo를 합쳐서 StampDto로 만들기
         stampDto.setStamp_id(optStampInfo.get().getStamp_id());

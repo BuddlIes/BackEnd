@@ -39,5 +39,6 @@ public class UserInfo {
     @Column private Double temperature; // 봉사 온도
     @Column private Integer compliment_num;
     @Column private Integer alarm; //알림 기능 on 1 & off 0
+    @Column private Integer login_num; //로그인 횟수[추가]
 
 }

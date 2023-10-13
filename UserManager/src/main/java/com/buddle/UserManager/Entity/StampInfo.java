@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,5 +31,7 @@ public class StampInfo {
     @Column private Integer had_volunteer_number;
     @Column private Integer review_number;
 
+
 }
+
 
