@@ -68,4 +68,14 @@ public class VolService {
 
         return "Register Completed";
     }
+
+    public List<VolListDto> checkMyCompletedVolList(Long whoVol) {
+        List<VolunteerInfo> myVolList = volRepository.findByWhoVolOrderByWriteTime(whoVol);
+
+        List<VolListDto> myVolDtoList = myVolList.stream().map(
+                m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
+        ).collect(Collectors.toList());
+
+        return myVolDtoList;
+    }
 }

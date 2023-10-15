@@ -51,4 +51,10 @@ public class VolController {
         return commentService.writeComment(reqDto);
     }
 
+    @GetMapping("/volunteer/get_my_completed_volList")
+    public List<VolListDto> getMyCompletedVolList(@RequestParam Long whoVol)
+    {
+        return volService.checkMyCompletedVolList(whoVol);
+    }
+
 }
