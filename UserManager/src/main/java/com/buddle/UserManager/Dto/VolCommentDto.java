@@ -14,7 +14,7 @@ import javax.persistence.Column;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VolCommentDto {
-    private Long id;
+    private Long id; //고유 아이디
 
     private Long volunteerId; //게시물 아이디
     private String comments; //댓글 내용

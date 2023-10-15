@@ -15,11 +15,11 @@ public class VolListDto {
 
     private Long writer; //게시물 작성자
     private String hashtag; //해시태그
-    private String title;
+    private String title; //게시물 제목
     private String img; /* 타입 변경될 수 있음 */
 
     private Long writeTime; //게시물 등록일시
     private Long volTime; //봉사 요청일시
-    private String place;
+    private String place; //봉사 요청장소
 
 }
