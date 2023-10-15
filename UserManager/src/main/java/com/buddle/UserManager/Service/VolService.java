@@ -19,7 +19,7 @@ public class VolService {
         List<VolunteerInfo> volInfosByHashTag = volRepository.findByhashTagOrderByWriteTime(hashtag);
         List<VolunteerInfo> volAllInfos = volRepository.findAllOrderByWriteTime(hashtag);
 
-        if(hashtag=="all")
+        if(hashtag=="전체")
         {
             List<VolListDto> allVolList = volAllInfos.stream().map(
                     m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
