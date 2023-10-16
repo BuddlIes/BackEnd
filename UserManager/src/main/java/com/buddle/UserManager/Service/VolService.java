@@ -22,7 +22,7 @@ public class VolService {
         if(hashtag=="전체")
         {
             List<VolListDto> allVolList = volAllInfos.stream().map(
-                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
+                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
             ).collect(Collectors.toList());
 
             return allVolList;
@@ -30,7 +30,7 @@ public class VolService {
         else
         {
             List<VolListDto> volListByHashTag = volInfosByHashTag.stream().map(
-                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
+                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
             ).collect(Collectors.toList());
 
             return volListByHashTag;
@@ -50,9 +50,10 @@ public class VolService {
                 result.getImg(),
 
                 result.getWriteTime(),
-                result.getVolTime(),
+                result.getWhenVol(),
                 result.getPlace(),
                 result.getWhoVol(),
+                result.getVolTime(),
                 result.getCompleted(),
 
                 result.getLikes(),
@@ -73,7 +74,7 @@ public class VolService {
         List<VolunteerInfo> myVolList = volRepository.findByWhoVolOrderByWriteTime(whoVol);
 
         List<VolListDto> myVolDtoList = myVolList.stream().map(
-                m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getVolTime(), m.getPlace())
+                m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
         ).collect(Collectors.toList());
 
         return myVolDtoList;
