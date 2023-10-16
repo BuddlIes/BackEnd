@@ -47,6 +47,8 @@ public class ReviewService {
                 break;
         }
 
+        //변경사항을 적용
+        userRepository.save(optRecieverInfo.get());
         return "Review has Successfully Aplied";
     }
 }

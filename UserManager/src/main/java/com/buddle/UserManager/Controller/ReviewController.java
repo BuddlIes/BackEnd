@@ -14,8 +14,13 @@ public class ReviewController {
     ReviewService reviewService;
 
     @PostMapping("/review")
-    public String userJoin(@RequestBody ReviewRequestDto reqDto)
+    public String reviewApply(@RequestBody ReviewRequestDto reqDto)
     {
         return reviewService.apply(reqDto);
     }
 }
+
+
+
+
+
