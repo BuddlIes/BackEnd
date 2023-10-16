@@ -19,6 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_info")
 public class UserInfo {
+
     @Id
     @Column(unique = true)
     private Long user_number; //학번 및 사번 //중복X

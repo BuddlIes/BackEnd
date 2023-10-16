@@ -12,16 +12,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "message_info")
-public class MessageInfo {
+@Table(name = "vol_comment_info")
+public class VolCommentInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true)
     private Long id;
 
-    @Column private Long chatroomid;
-    @Column private String messagecontent;
-    @Column private Long messagefrom;
-    @Column private Long createdat;
+    @Column private Long volunteerId; //게시물 아이디
+    @Column private String comments; //댓글 내용
+    @Column private Long whoComm; //댓글 작성자
+    @Column private Long time; //댓글 작성 일시
 }
