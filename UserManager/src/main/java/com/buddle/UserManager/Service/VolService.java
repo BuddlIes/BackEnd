@@ -16,7 +16,7 @@ public class VolService {
     VolunteerRepository volRepository;
 
     public List<VolListDto> checkVolList(String hashtag) {
-        List<VolunteerInfo> volInfosByHashTag = volRepository.findByhashTagOrderByWriteTime(hashtag);
+        List<VolunteerInfo> volInfosByHashTag = volRepository.findByHashTagOrderByWriteTime(hashtag);
         List<VolunteerInfo> volAllInfos = volRepository.findAllOrderByWriteTime(hashtag);
 
         if(hashtag=="전체")
