@@ -4,6 +4,8 @@ import com.buddle.UserManager.Entity.UserInfo;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class UserLoginRequestDto {

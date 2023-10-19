@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,6 +23,6 @@ public class MessageInfo {
 
     @Column private Long chatroomid;
     @Column private String messagecontent;
-    @Column private Long messagefrom;
+    @Column private Long messagefrom; //학번
     @Column private Long createdat;
 }
