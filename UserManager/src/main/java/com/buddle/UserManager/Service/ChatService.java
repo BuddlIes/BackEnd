@@ -39,7 +39,7 @@ public class ChatService {
             chatRoomDto.setChatRoomId(chatRoom.getChatRoom_id());
 //            System.out.println(memberId.equals(chatRoom.getUser1_num())?chatRoom.getUser2_num():chatRoom.getUser1_num());
             Optional<UserInfo> oponentUser = userRepository.findById(memberId.equals(chatRoom.getUser1_num())?chatRoom.getUser2_num():chatRoom.getUser1_num());
-            chatRoomDto.setOponentName(oponentUser.get().getName());
+            chatRoomDto.setOpponentName(oponentUser.get().getName());
             List<MessageInfo> messageInfos = msgRepository.findTopByChatroomidOrderByCreatedatDesc(chatRoom.getChatRoom_id());
             MessageInfo msg = messageInfos.get(0);
 
