@@ -15,7 +15,7 @@ public class UserLoginRequestDto {
     private String ajou_email;
     private String password;
 //    private String user_nickname;
-    private Long recent_access;
+    private LocalDateTime recent_access;
 
     public UserInfo toEntity() {
         UserInfo userInfo = new UserInfo();

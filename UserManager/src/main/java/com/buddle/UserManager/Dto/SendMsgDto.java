@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class SendMsgDto {
 
     private Long chatroomid;
-    private Long createdat;
+    private LocalDateTime createdat;
     private String messagecontent;
     private Long messagefrom;
 

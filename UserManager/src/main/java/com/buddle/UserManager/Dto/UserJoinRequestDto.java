@@ -17,7 +17,7 @@ public class UserJoinRequestDto {
     private String wallet_address;
     private String password;
     private String user_nickname;
-    private Long created_at;
+    private LocalDateTime created_at;
 
     public UserInfo toEntity() {
         UserInfo userInfo = new UserInfo();

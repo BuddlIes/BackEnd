@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ChatRoomDto {
     private Long chatRoomId;
-    private Long lastMessageTime;
+    private LocalDateTime lastMessageTime;
     private String opponentName;
     private String lastMessage;
 

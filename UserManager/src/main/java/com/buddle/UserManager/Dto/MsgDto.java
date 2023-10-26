@@ -18,5 +18,5 @@ public class MsgDto {
     private Long chatroomid;
     private Long createdat;
     private String messagecontent;
-    private Long messagefrom;
+    private LocalDateTime messagefrom;
 }

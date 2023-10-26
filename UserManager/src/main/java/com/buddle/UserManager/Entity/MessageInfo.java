@@ -24,5 +24,5 @@ public class MessageInfo {
     @Column private Long chatroomid;
     @Column private String messagecontent;
     @Column private Long messagefrom; //학번
-    @Column private Long createdat;
+    @Column private LocalDateTime createdat;
 }

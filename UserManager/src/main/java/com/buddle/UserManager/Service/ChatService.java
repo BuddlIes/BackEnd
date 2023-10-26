@@ -51,7 +51,8 @@ public class ChatService {
         listChatRoom.sort(new Comparator<ChatRoomDto>() {
             @Override
             public int compare(ChatRoomDto o1, ChatRoomDto o2) {
-                if(o1.getLastMessageTime() <= o2.getLastMessageTime())
+//                if(o1.getLastMessageTime() <= o2.getLastMessageTime()) //time1.compareTo(time2)
+                if(o1.getLastMessageTime().compareTo(o2.getLastMessageTime())<0)
                     return 1;
                 else
                     return -1;
@@ -66,7 +67,7 @@ public class ChatService {
         List<MessageInfo> msgInfos = msgRepository.findByChatroomidOrderByCreatedat(chatRoomId);
 
         List<MsgDto> msgDtoList = msgInfos.stream().map(
-                m-> new MsgDto(m.getId(),m.getChatroomid(),m.getCreatedat(),m.getMessagecontent(),m.getMessagefrom())
+                m-> new MsgDto(m.getId(),m.getChatroomid(),m.getMessagefrom(),m.getMessagecontent(),m.getCreatedat())
                 ).collect(Collectors.toList());
 
         return msgDtoList;
