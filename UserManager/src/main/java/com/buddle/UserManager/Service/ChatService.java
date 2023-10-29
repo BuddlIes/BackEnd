@@ -67,7 +67,7 @@ public class ChatService {
         List<MessageInfo> msgInfos = msgRepository.findByChatroomidOrderByCreatedat(chatRoomId);
 
         List<MsgDto> msgDtoList = msgInfos.stream().map(
-                m-> new MsgDto(m.getId(),m.getChatroomid(),m.getMessagefrom(),m.getMessagecontent(),m.getCreatedat())
+                m-> new MsgDto(m.getId(),m.getChatroomid(),m.getCreatedat(),m.getMessagecontent(),m.getMessagefrom())
                 ).collect(Collectors.toList());
 
         return msgDtoList;
