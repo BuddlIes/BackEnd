@@ -79,4 +79,17 @@ public class VolService {
 
         return myVolDtoList;
     }
+
+
+    public String checkMyVolTime(Long user) {
+
+
+        return "Checking Volunteer Times Completed";
+    }
+
+    public String checkMyVolNum(Long user) {
+
+
+        return "Checking Volunteer Numbers Completed";
+    }
 }

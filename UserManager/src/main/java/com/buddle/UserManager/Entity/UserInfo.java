@@ -32,7 +32,7 @@ public class UserInfo {
     @Column(unique = true) private String nickname; //중복X
 
     @Column private Integer delete_yn; //탈퇴 1 & 미탈퇴 0
-    @Column private LocalDateTime created_data; //가입 일시
+    @Column private LocalDateTime created_at; //가입 일시
     @Column private LocalDateTime recent_access; //최근 로그인 일시
     @Column private LocalDateTime modified_data; //회원정보 수정일시
 
@@ -40,8 +40,8 @@ public class UserInfo {
     @Column private Long vol_num; //총 봉사횟수
 
     @Column private Double temperature; // 봉사 온도
-    @Column private Integer compliment_num; //칭찬받은 횟수
+    @Column private Long compliment_num; //칭찬받은 횟수
     @Column private Integer alarm; //알림 기능 on 1 & off 0
-    @Column private Integer login_num; //로그인 횟수[추가]
+    @Column private Long login_num; //로그인 횟수[추가]
 
 }
