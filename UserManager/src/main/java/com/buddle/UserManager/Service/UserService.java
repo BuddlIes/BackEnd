@@ -28,14 +28,15 @@ public class UserService {
             //초기 설정
             UserInfo userEntity = users.toEntity();
             userEntity.setDelete_yn(0); // 탈퇴 안함
-            userEntity.setCreated_at(LocalDateTime.now());
+            userEntity.setCreated_at(LocalDateTime.now()); //가입 일시
             userEntity.setVol_hour(0F);
             userEntity.setVol_num(0L);
             userEntity.setTemperature(36.5);
             userEntity.setCompliment_num(0L);
             userEntity.setAlarm(1); // 알람 ON
+            userEntity.setLogin_num(0L); //로그인 횟수
 
-            userRepository.save(users.toEntity());
+            userRepository.save(userEntity);
             return "Join Completed";
         }
         else { //회원가입 실패
