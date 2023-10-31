@@ -24,7 +24,7 @@ public class VolunteerInfo {
     @Column private Long writer; //게시물 작성자(피봉사자)
     @Column private String hashtag; //해시태그
     @Column private String title; //게시물 제목
-    @Column private String detailed; //글 내용
+    @Lob private String detailed; //글 내용
     @Column private String img; /* 타입 변경될 수 있음 */
 
     @Column private LocalDateTime writeTime; //게시물 등록일시
