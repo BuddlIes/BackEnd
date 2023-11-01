@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StampDto {
+public class StampResponseDto {
 
     //StampInfo에서 온 필드
     private Long stamp_id;
