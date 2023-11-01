@@ -25,6 +25,9 @@ public class NFTService {
     /*어떤 NFT를 이 유저가 획득할 수 있는지 확인함*/
     public Boolean checkAcquireNFT(NFTRequestDto nftRequestDto){
 
+        //NFT와 유저가 존재하는지 확인
+
+        //획득 조건을 비교하기
         return true;
     }
 

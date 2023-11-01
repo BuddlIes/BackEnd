@@ -23,4 +23,5 @@ public class NFTInfo {
     @Column private String nft_name;
     @Column private Integer nft_category;
     @Column private Integer discount_rate;
+    @Column private Integer neeede_stamp;
 }

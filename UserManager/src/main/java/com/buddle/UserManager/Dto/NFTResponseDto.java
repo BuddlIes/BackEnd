@@ -14,6 +14,7 @@ public class NFTResponseDto {
     private String nft_name;
     private Integer nft_category;
     private Integer discount_rate;
+    private Integer needed_stamp;
 
     //NFTAcquireInfo에서 온 필드
     private Long acquire_id;
