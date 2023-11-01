@@ -24,6 +24,7 @@ public interface VolunteerRepository extends JpaRepository<VolunteerInfo, Long> 
 
     //사용자가 완료한 봉사 활동 시간 다 더하기
 
-    //사용자가 완료한 봉사 횟수
+    //사용자가 완료한 봉사 횟수(completed = 0 넣어서 호출하면 됨)
+    Long countDistinctByWriterEqualsAndCompletedEquals(Long writer, Integer completed);
 
 }

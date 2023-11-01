@@ -10,6 +10,7 @@ import com.buddle.UserManager.repository.StampRepository;
 import com.buddle.UserManager.repository.UserRepository;
 
 import com.buddle.UserManager.dto.StampResponseDto;
+import com.buddle.UserManager.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,9 @@ public class StampService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    VolunteerRepository volunteerRepository;
+
     /*이 스탬프의 획득 조건을 만족하는 지 확인함*/
     public Boolean checkAcquireStamp(StampRequestDto reqDto){
 
@@ -42,6 +46,9 @@ public class StampService {
         if(optStampInfo.isEmpty()){return false;}
         Integer stamp_type = optStampInfo.get().getStamp_type();
 
+        //post 수 세기
+        Long post_number = volunteerRepository.countDistinctByWriterEqualsAndCompletedEquals(optUserInfo.get().getUser_number(), 0);
+
         //login 횟수 체크하기
         if( (stamp_type & StampConstant.STAMP_TYPE_LOGIN) > 0) {
             if ( (optUserInfo.get().getLogin_num().intValue()) != (optStampInfo.get().getLogin_number().intValue()) ) {
@@ -50,6 +57,11 @@ public class StampService {
         }
 
         //post 횟수 체크하기
+        if( (stamp_type & StampConstant.STAMP_TYPE_POST) > 0){
+            if(post_number != (optStampInfo.get().getPost_number().intValue())){
+                return false;
+            }
+        }
 
         //comment 횟수 체크하기
 
