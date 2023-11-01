@@ -60,8 +60,6 @@ public class StampService {
             }
         }
 
-        //수혜자 참여 수 체크하기
-
         //review 횟수 체크하기
 
         return true;
@@ -107,7 +105,6 @@ public class StampService {
         stampResponseDto.setPost_number(optStampInfo.get().getPost_number());
         stampResponseDto.setComment_number(optStampInfo.get().getComment_number());
         stampResponseDto.setDo_volunteer_number(optStampInfo.get().getDo_volunteer_number());
-        stampResponseDto.setHad_volunteer_number(optStampInfo.get().getHad_volunteer_number());
         stampResponseDto.setReview_number(optStampInfo.get().getReview_number());
 
         stampResponseDto.setAcquire_id(optStampAcquireInfo.get().getAcquire_id());
@@ -138,7 +135,6 @@ public class StampService {
             stampResponseDto.setPost_number( ((StampInfo)one[0]).getPost_number() );
             stampResponseDto.setComment_number( ((StampInfo)one[0]).getComment_number() );
             stampResponseDto.setDo_volunteer_number( ((StampInfo)one[0]).getDo_volunteer_number() );
-            stampResponseDto.setHad_volunteer_number( ((StampInfo)one[0]).getHad_volunteer_number() );
             stampResponseDto.setReview_number( ((StampInfo)one[0]).getReview_number() );
 
             stampResponseDto.setAcquire_id( ((StampAcquireInfo)one[1]).getAcquire_id() );

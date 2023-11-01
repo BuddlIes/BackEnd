@@ -28,7 +28,6 @@ public class StampInfo {
     @Column private Integer post_number;
     @Column private Integer comment_number;
     @Column private Integer do_volunteer_number;
-    @Column private Integer had_volunteer_number;
     @Column private Integer review_number;
 
 
