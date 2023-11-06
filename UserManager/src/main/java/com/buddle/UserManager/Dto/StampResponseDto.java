@@ -21,7 +21,6 @@ public class StampResponseDto {
     private Integer post_number;
     private Integer comment_number;
     private Integer do_volunteer_number;
-    private Integer had_volunteer_number;
     private Integer review_number;
 
     //StampAcquireInfo에서 온 필드

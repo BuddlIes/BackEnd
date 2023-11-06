@@ -14,3 +14,4 @@ public class StampRequestDto {
     private Long user_number;
     private Long stamp_id;
 }
+

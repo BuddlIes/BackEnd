@@ -80,7 +80,7 @@ public class StampService {
     /*스탬프 힉득 정보를 DB에 저장함*/
     public Boolean acquireStamp(StampRequestDto reqDto){
 
-        //StampAcquireInfo 만들기
+       // StampAcquireInfo 만들기
         StampAcquireInfo stampAcquireInfo = new StampAcquireInfo();
         stampAcquireInfo.setStampId(reqDto.getStamp_id());
         stampAcquireInfo.setUserNumber(reqDto.getUser_number());
@@ -158,4 +158,5 @@ public class StampService {
         return stampResponseDtoList;
 
     }
+
 }
