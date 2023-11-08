@@ -1,5 +1,7 @@
 package com.buddle.UserManager.controller;
 
+import com.buddle.UserManager.dto.LoginRequestResponseDto;
+import com.buddle.UserManager.dto.ResponseDataDto;
 import com.buddle.UserManager.dto.UserJoinRequestDto;
 import com.buddle.UserManager.dto.UserLoginRequestDto;
 import com.buddle.UserManager.service.UserService;
@@ -20,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String userLogin(@RequestBody UserLoginRequestDto reqDto)
+    public ResponseDataDto userLogin(@RequestBody UserLoginRequestDto reqDto)
     {
         return userService.login(reqDto);
     }
