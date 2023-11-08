@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface VolunteerRepository extends JpaRepository<VolunteerInfo, Long> {
     //전체 게시물 리스트 작성된 시간순으로 확인
-    List<VolunteerInfo> findAllOrderByWriteTime(String hashTag);
+    List<VolunteerInfo> findAllByOrderByVolunteerId();
 
     //사용자가 해시태그별로 게시물 리스트 작성된 시간순으로 확인
-    @Query("Select m from VolunteerInfo m where m.hashtag = :hashTag and m.completed = 1 order by m.writeTime")
+    @Query("Select m from VolunteerInfo m where m.hashtag = :hashTag and m.completed = 1 order by m.volunteerId")
     List<VolunteerInfo> findByHashTagOrderByWriteTime(@Param("hashTag") String hashTag);
 
     Optional<VolunteerInfo> findById(Long volunteerId);

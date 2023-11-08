@@ -17,11 +17,17 @@ public class VolService {
     VolunteerRepository volRepository;
 
     public List<VolListDto> checkVolList(String hashtag) {
-        List<VolunteerInfo> volInfosByHashTag = volRepository.findByHashTagOrderByWriteTime(hashtag);
-        List<VolunteerInfo> volAllInfos = volRepository.findAllOrderByWriteTime(hashtag);
 
-        if(hashtag=="전체")
+
+
+
+        System.out.println(hashtag);
+        System.out.println(hashtag.equals("전체"));
+        if(hashtag.equals("전체"))
         {
+            System.out.println("this is all");
+            List<VolunteerInfo> volAllInfos = volRepository.findAllByOrderByVolunteerId();
+            System.out.println("this is all");
             List<VolListDto> allVolList = volAllInfos.stream().map(
                     m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
             ).collect(Collectors.toList());
@@ -30,6 +36,8 @@ public class VolService {
         }
         else
         {
+            System.out.println("this is not all");
+            List<VolunteerInfo> volInfosByHashTag = volRepository.findByHashTagOrderByWriteTime(hashtag);
             List<VolListDto> volListByHashTag = volInfosByHashTag.stream().map(
                     m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
             ).collect(Collectors.toList());

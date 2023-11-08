@@ -4,6 +4,7 @@ import com.buddle.UserManager.dto.*;
 import com.buddle.UserManager.service.CommentService;
 import com.buddle.UserManager.service.VolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +26,6 @@ public class VolController {
     }
 
     //봉사 게시물 상세 내용 확인
-
     @GetMapping("/volunteer/get_volunteer_content")
     public VolContentDto getVolunteerContent(@RequestParam Long volunteerId)
     {
