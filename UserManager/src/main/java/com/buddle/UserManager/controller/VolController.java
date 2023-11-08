@@ -4,7 +4,6 @@ import com.buddle.UserManager.dto.*;
 import com.buddle.UserManager.service.CommentService;
 import com.buddle.UserManager.service.VolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,13 +38,13 @@ public class VolController {
     }
 
     @GetMapping("/volunteer/get_comment_list")
-    public List<VolCommentDto> getCommentList(@RequestParam Long volunteerId)
+    public List<VolCommentListDto> getCommentList(@RequestParam Long volunteerId)
     {
         return commentService.checkCommentsList(volunteerId);
     }
 
     @PostMapping("/volunteer/write_comment")
-    public String getWriteComment(@RequestBody VolCommentDto reqDto)
+    public ResponseDataDto getWriteComment(@RequestBody VolUploadCommentDto reqDto)
     {
         return commentService.writeComment(reqDto);
     }
