@@ -33,8 +33,7 @@ public class VolController {
     }
 
     @PostMapping("/volunteer/register_vol")
-//    @RequestMapping(method=RequestMethod.POST, value="/volunteer/register_vol")
-    public String getRegisterVolunteer(@RequestBody VolUploadRequestDto reqDto)
+    public ResponseDataDto getRegisterVolunteer(@RequestBody VolUploadRequestDto reqDto)
     {
         return volService.registerVol(reqDto);
     }

@@ -6,6 +6,7 @@ import com.buddle.UserManager.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,10 +65,18 @@ public class VolService {
 
     }
 
-    public String registerVol(VolUploadRequestDto vol) {
-        volRepository.save(vol.toEntity());
+    public ResponseDataDto<VolUploadRequestResponseDto> registerVol(VolUploadRequestDto vol) {
 
-        return "Register Completed";
+        VolunteerInfo volunteerInfo = vol.toEntity();
+        volunteerInfo.setChatNum(0L);
+        volunteerInfo.setCompleted(1); //완료 0, 미완료 1
+        volunteerInfo.setLikes(0L);
+        volunteerInfo.setWhoVol(0L); // 0이면 아직 봉사자 안정해짐
+        volunteerInfo.setWriteTime(LocalDateTime.now()); //게시물 업로드 시간
+
+        volRepository.save(volunteerInfo);
+
+        return new ResponseDataDto("Register Success", 200, new VolUploadRequestResponseDto(volunteerInfo.getVolunteerId(), volunteerInfo.getWriter(), volunteerInfo.getTitle(), volunteerInfo.getHashtag(), volunteerInfo.getWriteTime()));
     }
 
     public List<VolListDto> checkMyCompletedVolList(Long whoVol) {
