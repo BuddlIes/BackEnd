@@ -38,7 +38,7 @@ public class ChatService {
 //            System.out.println(memberId.equals(chatRoom.getUser1_num())?chatRoom.getUser2_num():chatRoom.getUser1_num());
             Optional<UserInfo> oponentUser = userRepository.findById(memberId.equals(chatRoom.getUser1_num())?chatRoom.getUser2_num():chatRoom.getUser1_num());
             chatRoomDto.setOpponentName(oponentUser.get().getName());
-            List<MessageInfo> messageInfos = msgRepository.findTopByChatroomidOrderByCreatedatDesc(chatRoom.getChatRoom_id());
+            List<MessageInfo> messageInfos = msgRepository.findTopByChatroomidOrderByIdDesc(chatRoom.getChatRoom_id());
             MessageInfo msg = messageInfos.get(0);
 
             chatRoomDto.setLastMessage(msg.getMessagecontent());
@@ -62,7 +62,7 @@ public class ChatService {
 
     //메세지 내용 확인
     public List<MsgDto> checkMsgList(Long chatRoomId) {
-        List<MessageInfo> msgInfos = msgRepository.findByChatroomidOrderByCreatedat(chatRoomId);
+        List<MessageInfo> msgInfos = msgRepository.findByChatroomidOrderById(chatRoomId);
 
         List<MsgDto> msgDtoList = msgInfos.stream().map(
                 m-> new MsgDto(m.getId(),m.getChatroomid(),m.getCreatedat(),m.getMessagecontent(),m.getMessagefrom())

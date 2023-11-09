@@ -22,7 +22,7 @@ public class VolCommentInfo {
     private Long id;
 
     @Column private Long volunteerId; //게시물 아이디
-    @Column private String comments; //댓글 내용
+    @Lob private String comments; //댓글 내용
     @Column private Long whoComm; //댓글 작성자
     @Column private LocalDateTime time; //댓글 작성 일시
 }

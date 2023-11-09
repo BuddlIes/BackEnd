@@ -25,7 +25,7 @@ public class VolunteerInfo {
     @Column private String hashtag; //해시태그
     @Column private String title; //게시물 제목
     @Lob private String detailed; //글 내용
-    @Column private String img; /* 타입 변경될 수 있음 */
+    @Lob private String img; /* 타입 변경될 수 있음 */
 
     @Column private LocalDateTime writeTime; //게시물 등록일시
     @Column private String whenVol; //봉사 요청일시
