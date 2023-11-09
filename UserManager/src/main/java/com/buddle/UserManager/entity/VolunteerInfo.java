@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class VolunteerInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
     private Long volunteerId; //봉사 게시물 아이디
 

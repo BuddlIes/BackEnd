@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,5 +32,7 @@ public class VolContentDto {
     private Long likes; //관심 등록 수
 
     private Long chatNum; //받은 채팅 수
+
+    private List<VolCommentListDto> commentInfo; //댓글
 
 }

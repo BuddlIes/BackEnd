@@ -1,12 +1,17 @@
 package com.buddle.UserManager.service;
 
 import com.buddle.UserManager.dto.*;
+import com.buddle.UserManager.entity.VolCommentInfo;
 import com.buddle.UserManager.entity.VolunteerInfo;
+import com.buddle.UserManager.repository.CommentRepository;
 import com.buddle.UserManager.repository.VolunteerRepository;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,6 +20,9 @@ import java.util.stream.Collectors;
 public class VolService {
     @Autowired
     VolunteerRepository volRepository;
+
+    @Autowired
+    CommentRepository commRepository;
 
     public List<VolListDto> checkVolList(String hashtag) {
 
@@ -48,26 +56,37 @@ public class VolService {
 
     public VolContentDto checkVolContent(Long volunteerId) {
         Optional<VolunteerInfo> volContentInfo = volRepository.findById(volunteerId);
-        VolunteerInfo result = volContentInfo.get();
+        List<VolCommentInfo> volCommentInfo = commRepository.findComments(volunteerId);
+        VolunteerInfo contentInfo = volContentInfo.get();
 
         VolContentDto volDto = new VolContentDto(
-                result.getVolunteerId(),
-                result.getWriter(),
-                result.getHashtag(),
-                result.getTitle(),
-                result.getDetailed(),
-                result.getImg(),
+                contentInfo.getVolunteerId(),
+                contentInfo.getWriter(),
+                contentInfo.getHashtag(),
+                contentInfo.getTitle(),
+                contentInfo.getDetailed(),
+                contentInfo.getImg(),
 
-                result.getWriteTime(),
-                result.getWhenVol(),
-                result.getPlace(),
-                result.getWhoVol(),
-                result.getVolTime(),
-                result.getCompleted(),
+                contentInfo.getWriteTime(),
+                contentInfo.getWhenVol(),
+                contentInfo.getPlace(),
+                contentInfo.getWhoVol(),
+                contentInfo.getVolTime(),
+                contentInfo.getCompleted(),
 
-                result.getLikes(),
-                result.getChatNum()
+                contentInfo.getLikes(),
+                contentInfo.getChatNum(),
+
+                null
         );
+
+        List<VolCommentListDto> comments = new ArrayList<>();
+        for(int i = 0; i< volCommentInfo.size(); i++) {
+            VolCommentInfo thisComment = volCommentInfo.get(i);
+            comments.add(new VolCommentListDto(thisComment.getId(), thisComment.getComments(),thisComment.getWhoComm(),thisComment.getTime()));
+        }
+
+        volDto.setCommentInfo(comments);
 
         return volDto;
 
