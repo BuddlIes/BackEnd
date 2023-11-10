@@ -32,7 +32,7 @@ public class VolController {
     }
 
 //    @RequestMapping(value = "/volunteer/register_vol", method = RequestMethod.POST, consumes = "multipart/form-data")
-    @PostMapping("/volunteer/get_volunteer_content")
+    @PostMapping("/volunteer/register_vol")
     public ResponseDataDto registerVolunteer(@RequestBody VolUploadRequestDto reqDto)
     {
         return volService.registerVol(reqDto);
