@@ -31,8 +31,9 @@ public class VolController {
         return volService.checkVolContent(volunteerId);
     }
 
-    @PostMapping("/volunteer/register_vol")
-    public ResponseDataDto getRegisterVolunteer(@RequestBody VolUploadRequestDto reqDto)
+//    @RequestMapping(value = "/volunteer/register_vol", method = RequestMethod.POST, consumes = "multipart/form-data")
+    @PostMapping("/volunteer/get_volunteer_content")
+    public ResponseDataDto registerVolunteer(@RequestBody VolUploadRequestDto reqDto)
     {
         return volService.registerVol(reqDto);
     }
