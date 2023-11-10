@@ -1,10 +1,7 @@
 package com.buddle.UserManager.dto;
 
 import com.buddle.UserManager.entity.MessageInfo;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class SendMsgDto {
 
     private Long chatroomid;
