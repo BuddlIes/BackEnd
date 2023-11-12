@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class VolContentDto {
     private Long whoVol; //봉사자
     private Float volTime; //봉사 활동시간 (시간 단위)
     private Integer completed; //완료 0, 미완료 1
+    private LocalDateTime whencompleted; //봉사 완료 시각
 
     private Long likes; //관심 등록 수
 
