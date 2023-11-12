@@ -32,38 +32,44 @@ public class NFTService {
     StampAcquireRepository stampAcquireRepository;
 
     /*어떤 NFT를 이 유저가 획득할 수 있는지 확인함*/
-    public Boolean checkAcquireNFT(NFTRequestDto nftRequestDto){
+    public Long checkAcquireNFT(NFTRequestDto nftRequestDto){
 
-        //NFT와 유저가 존재하는지 확인
-        Optional<NFTInfo> optNFTInfo = nftRepository.findById(nftRequestDto.getNft_id());
-        if(optNFTInfo.isEmpty()){return false;}
+        return 10000L;
 
-        Optional<UserInfo> optUserInfo = userRepository.findById(nftRequestDto.getUser_number());
-        if(optUserInfo.isEmpty()){return false;}
-
-        //이 유저가 쓸 수 있는 스탬프의 수 가져오기
-        Long stamp_usable = stampAcquireRepository.countDistinctByUserNumberEquals(nftRequestDto.getUser_number());
-        List<Object[]> his_nfts = nftRepository.findNFTInfoListWithAcquire(nftRequestDto.getUser_number());
-        for(Object[] one : his_nfts) {
-            stamp_usable = stamp_usable - ((NFTInfo)one[0]).getNeeded_stamp();
-        }
-
-        //획득 조건을 비교하기
-        if(optNFTInfo.get().getNeeded_stamp() <= stamp_usable){
-
-            //스탬프 개수가 넉넉하므로 조건 만족
-            return true;
-        }else{
-            //스탬프 개수가 모자람
-            return false;
-        }
+//        //NFT와 유저가 존재하는지 확인
+//        Optional<NFTInfo> optNFTInfo = nftRepository.findById(nftRequestDto.getNft_id());
+//        if(optNFTInfo.isEmpty()){return 10000L;}
+//
+//        Optional<UserInfo> optUserInfo = userRepository.findById(nftRequestDto.getUser_number());
+//        if(optUserInfo.isEmpty()){return 10000L;}
+//
+//        //이 유저가 쓸 수 있는 스탬프의 수 가져오기
+//        Long stamp_usable = 10000L;
+//        return stamp_usable;
+//        stamp_usable = stampAcquireRepository.countDistinctByUserNumberEquals(nftRequestDto.getUser_number());
+//        List<Object[]> his_nfts = nftRepository.findNFTInfoListWithAcquire(nftRequestDto.getUser_number());
+//        for(Object[] one : his_nfts) {
+//            stamp_usable = stamp_usable - ((NFTInfo)one[0]).getNeeded_stamp();
+//        }
+//
+//        //획득 조건을 비교하기
+//        if(optNFTInfo.get().getNeeded_stamp() <= stamp_usable){
+//
+//            //스탬프 개수가 넉넉하므로 조건 만족
+//            //return true;
+//            return stamp_usable;
+//        }else{
+//            //스탬프 개수가 모자람
+//            //return false;
+//            return stamp_usable;
+        //}
     }
 
     /*어떤 NFT를 이 유저가 획득하려고 함*/
     public Boolean acquireNFT(NFTRequestDto nftRequestDto) {
 
         //nft 획득 가능 여부 조사하기
-        if( !checkAcquireNFT(nftRequestDto) ) return false;
+       // if( !checkAcquireNFT(nftRequestDto) ) return false;
 
         //nft 쪽 API에 지갑주소 넘기고 완료 여부 받아오기
 

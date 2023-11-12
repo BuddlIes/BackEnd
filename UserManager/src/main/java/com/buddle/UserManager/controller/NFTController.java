@@ -15,7 +15,7 @@ public class NFTController {
     NFTService nftService;
 
     @PostMapping("nft/check_condition")
-    public Boolean checkAcquireNFT(@RequestBody NFTRequestDto reqDto){return nftService.acquireNFT(reqDto);}
+    public Long checkAcquireNFT(@RequestBody NFTRequestDto reqDto){return nftService.checkAcquireNFT(reqDto);}
 
     @PostMapping("nft/acquire")
     public Boolean acquireNFT(@RequestBody NFTRequestDto reqDto){return nftService.acquireNFT(reqDto);}
