@@ -3,10 +3,13 @@ package com.buddle.UserManager.controller;
 import com.buddle.UserManager.dto.*;
 import com.buddle.UserManager.service.CommentService;
 import com.buddle.UserManager.service.VolService;
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class VolController {
@@ -50,10 +53,24 @@ public class VolController {
         return commentService.writeComment(reqDto);
     }
 
-    @GetMapping("/volunteer/get_my_completed_volList")
-    public List<VolListDto> getMyCompletedVolList(@RequestParam Long whoVol)
+    @GetMapping("/volunteer/get_my_completed_volInfo")
+    public Map<String, Object> getMyCompletedVolInfo(@RequestParam Long whoVol)
     {
-        return volService.checkMyCompletedVolList(whoVol);
+        Map<String, Object> result = new HashMap<>();
+
+        // 사용자가 완료한 봉사정보 리스트
+        List<VolListDto> myVolList = volService.checkMyCompletedVolList(whoVol);
+        result.put("completedVolList", myVolList);
+
+        // 사용자가 완료한 총 봉사시간
+        Float totalVolunteerTime = volService.checkMyVolTime(whoVol);
+        result.put("totalVolunteerTime", totalVolunteerTime);
+
+        // 사용자가 완료한 총 봉사 횟수
+        Integer totalVolunteerCount = volService.checkMyVolNum(whoVol);
+        result.put("totalVolunteerCount", totalVolunteerCount);
+
+        return result;
     }
 
 }

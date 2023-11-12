@@ -116,16 +116,23 @@ public class VolService {
         return myVolDtoList;
     }
 
-
-    public String checkMyVolTime(Long user) {
-
-
-        return "Checking Volunteer Times Completed";
+    public Float checkMyVolTime(Long user) {
+        //사용자가 완료한 봉사 활동 시간 다 더하기
+        Float totalVolunteerTime = volRepository.findBySumDurationByWhoVol(user);
+        if (totalVolunteerTime != null) {
+            return totalVolunteerTime;
+        } else {
+            return 0F;
+        }
     }
 
-    public String checkMyVolNum(Long user) {
-
-
-        return "Checking Volunteer Numbers Completed";
+    public Integer checkMyVolNum(Long user) {
+        // 특정 사용자가 완료한 봉사 개수
+        Integer completedVolunteerActivities = volRepository.findByCountCompletedVolunteerActivities(user);
+        if (completedVolunteerActivities != null) {
+            return completedVolunteerActivities;
+        } else {
+            return 0;
+        }
     }
 }
