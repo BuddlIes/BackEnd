@@ -12,11 +12,11 @@ public class UserJoinRequestDto {
 
     private Long user_number;
 
-    private String user_name;
-    private String ajou_email;
-    private String wallet_address;
+    private String name;
+    private String email;
+    private String wallet;
     private String password;
-    private String user_nickname;
+    private String nickname;
 
     private Integer delete_yn;
     private LocalDateTime created_at;
@@ -31,11 +31,11 @@ public class UserJoinRequestDto {
         UserInfo userInfo = new UserInfo();
         userInfo.setUser_number(this.user_number);
 
-        userInfo.setName(this.user_name);
-        userInfo.setEmail(this.ajou_email);
-        userInfo.setWallet(this.wallet_address);
+        userInfo.setName(this.name);
+        userInfo.setEmail(this.email);
+        userInfo.setWallet(this.wallet);
         userInfo.setPassword(this.password);
-        userInfo.setNickname(this.user_nickname);
+        userInfo.setNickname(this.nickname);
         userInfo.setCreated_at(this.created_at);
 
         return userInfo;

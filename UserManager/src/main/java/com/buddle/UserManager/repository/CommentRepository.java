@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<VolCommentInfo, Long> {
-    @Query("Select m from VolCommentInfo m where m.volunteerId = :volId order by m.time")
+    @Query("Select m from VolCommentInfo m where m.volunteerId = :volId order by m.id")
     List<VolCommentInfo> findComments(@Param("volId") Long volId);
 }

@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class UserLoginRequestDto {
-    private String ajou_email;
+    private String email;
     private String password;
     private LocalDateTime recent_access;
 
     public UserInfo toEntity() {
         UserInfo userInfo = new UserInfo();
-        userInfo.setEmail(this.ajou_email);
+        userInfo.setEmail(this.email);
         userInfo.setPassword(this.password);
         userInfo.setRecent_access(this.recent_access);
         return userInfo;

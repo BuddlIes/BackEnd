@@ -25,7 +25,6 @@ public class VolController {
     }
 
     //봉사 게시물 상세 내용 확인
-
     @GetMapping("/volunteer/get_volunteer_content")
     public VolContentDto getVolunteerContent(@RequestParam Long volunteerId)
     {
@@ -33,20 +32,19 @@ public class VolController {
     }
 
     @PostMapping("/volunteer/register_vol")
-//    @RequestMapping(method=RequestMethod.POST, value="/volunteer/register_vol")
-    public String getRegisterVolunteer(@RequestBody VolUploadRequestDto reqDto)
+    public ResponseDataDto getRegisterVolunteer(@RequestBody VolUploadRequestDto reqDto)
     {
         return volService.registerVol(reqDto);
     }
 
     @GetMapping("/volunteer/get_comment_list")
-    public List<VolCommentDto> getCommentList(@RequestParam Long volunteerId)
+    public List<VolCommentListDto> getCommentList(@RequestParam Long volunteerId)
     {
         return commentService.checkCommentsList(volunteerId);
     }
 
     @PostMapping("/volunteer/write_comment")
-    public String getWriteComment(@RequestBody VolCommentDto reqDto)
+    public ResponseDataDto getWriteComment(@RequestBody VolUploadCommentDto reqDto)
     {
         return commentService.writeComment(reqDto);
     }
