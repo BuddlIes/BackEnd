@@ -134,7 +134,7 @@ public class VolService {
 
     public String uploadVolInfoWhenCompleted(VolunteerCompletedRequestDto completedvolDto) {
         Optional<VolunteerInfo> optVolunteerId = volRepository.findById(completedvolDto.getVolunteerId());
-//        List<VolunteerInfo> optCompletedVol = volRepository.findByCompletedOrderByWhenCompleted(1);
+        Optional<UserInfo> optUserId = userRepository.findById(completedvolDto.getWhoVol());
 
         //완료 request(volunteerId, whoVol)를 받으면
 
@@ -144,37 +144,37 @@ public class VolService {
 
         //whoVol과 UserInfo 데베의 user_number가 일치하는 것을 찾아서
         //해당 user의 vol_hour와 vol_num을 volTime과 1만큼 증가시킨다.
-        VolunteerInfo volunteerInfo = optVolunteerId.get();
 
 
-        if(optVolunteerId.isPresent()) {
+        if(optVolunteerId.isPresent() && optUserId.isPresent()) {
+            VolunteerInfo volunteerInfo = optVolunteerId.get();
+            UserInfo userInfo = optUserId.get();
 
-            volunteerInfo.setCompleted(0);
-            volunteerInfo.setWhencompleted(LocalDateTime.now());
-
-            volRepository.save(volunteerInfo);
-
-            Optional<UserInfo> optUserId = userRepository.findById(completedvolDto.getWhoVol());
-
-            if(optUserId.isPresent()) {
-                UserInfo userInfo = optUserId.get();
+            if(volunteerInfo.getCompleted()==0)
+            {
+                return "이미 완료된 게시물 입니다.";
+            }
+            else {
+                volunteerInfo.setCompleted(0);
+                volunteerInfo.setWhencompleted(LocalDateTime.now());
+                volunteerInfo.setWhoVol(completedvolDto.getWhoVol());
+                volRepository.save(volunteerInfo);
 
                 userInfo.setVol_hour(userInfo.getVol_hour() + completedvolDto.getVolTime());
                 userInfo.setVol_num(userInfo.getVol_num()+1);
-
                 userRepository.save(userInfo);
 
                 return "데이터가 정상적으로 업데이트되었습니다.";
             }
-            else {
-                return "봉사자 정보를 찾을 수 없습니다.";
-            }
         }
-        else if (volunteerInfo.getCompleted()==1) {
-            return "이미 완료된 봉사입니다.";
+        else if(optVolunteerId.isEmpty() && optUserId.isPresent()) {
+            return "봉사 게시물을 찾을 수 없습니다.";
+        }
+        else if(optVolunteerId.isPresent() && optUserId.isEmpty()) {
+            return "사용자 정보를 찾을 수 없습니다.";
         }
         else {
-            return "봉사 게시물 정보를 찾을 수 없습니다.";
+            return "사용자 정보와 봉사 게시물 정보 모두 찾을 수 없습니다. ";
         }
     }
 }
