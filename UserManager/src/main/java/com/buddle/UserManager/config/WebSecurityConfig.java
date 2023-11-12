@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 
 @Configuration
 @EnableWebSecurity

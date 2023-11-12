@@ -22,7 +22,7 @@ public class MessageInfo {
     private Long id;
 
     @Column private Long chatroomid;
-    @Column private String messagecontent;
+    @Lob private String messagecontent;
     @Column private Long messagefrom; //학번
     @Column private LocalDateTime createdat;
 }
