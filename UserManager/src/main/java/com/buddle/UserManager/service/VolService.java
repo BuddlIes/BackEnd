@@ -1,13 +1,13 @@
 package com.buddle.UserManager.service;
 
 import com.buddle.UserManager.dto.*;
+import com.buddle.UserManager.entity.UserInfo;
 import com.buddle.UserManager.entity.VolCommentInfo;
 import com.buddle.UserManager.entity.VolunteerInfo;
 import com.buddle.UserManager.repository.CommentRepository;
+import com.buddle.UserManager.repository.UserRepository;
 import com.buddle.UserManager.repository.VolunteerRepository;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,18 +24,14 @@ public class VolService {
     @Autowired
     CommentRepository commRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     public List<VolListDto> checkVolList(String hashtag) {
 
-
-
-
-        System.out.println(hashtag);
-        System.out.println(hashtag.equals("전체"));
         if(hashtag.equals("전체"))
         {
-            System.out.println("this is all");
             List<VolunteerInfo> volAllInfos = volRepository.findAllByOrderByVolunteerId();
-            System.out.println("this is all");
             List<VolListDto> allVolList = volAllInfos.stream().map(
                     m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
             ).collect(Collectors.toList());
@@ -44,7 +40,6 @@ public class VolService {
         }
         else
         {
-            System.out.println("this is not all");
             List<VolunteerInfo> volInfosByHashTag = volRepository.findByHashTagOrderByWriteTime(hashtag);
             List<VolListDto> volListByHashTag = volInfosByHashTag.stream().map(
                     m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
@@ -73,6 +68,7 @@ public class VolService {
                 contentInfo.getWhoVol(),
                 contentInfo.getVolTime(),
                 contentInfo.getCompleted(),
+                contentInfo.getWhencompleted(),
 
                 contentInfo.getLikes(),
                 contentInfo.getChatNum(),
@@ -107,7 +103,7 @@ public class VolService {
     }
 
     public List<VolListDto> checkMyCompletedVolList(Long whoVol) {
-        List<VolunteerInfo> myVolList = volRepository.findByWhoVolOrderByWriteTime(whoVol);
+        List<VolunteerInfo> myVolList = volRepository.findByWhoVolOrderByWhencompleted(whoVol);
 
         List<VolListDto> myVolDtoList = myVolList.stream().map(
                 m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
@@ -133,6 +129,52 @@ public class VolService {
             return completedVolunteerActivities;
         } else {
             return 0;
+        }
+    }
+
+    public String uploadVolInfoWhenCompleted(VolunteerCompletedRequestDto completedvolDto) {
+        Optional<VolunteerInfo> optVolunteerId = volRepository.findById(completedvolDto.getVolunteerId());
+        Optional<UserInfo> optUserId = userRepository.findById(completedvolDto.getWhoVol());
+
+        //완료 request(volunteerId, whoVol)를 받으면
+
+        //VolunteerInfo 데베에서 volunteerId 찾은 다음,
+        //해당 completed Column의 값을 0으로 바꾸고,
+        //whencompleted 내역을 timestamp로 찍어서 저장한다.
+
+        //whoVol과 UserInfo 데베의 user_number가 일치하는 것을 찾아서
+        //해당 user의 vol_hour와 vol_num을 volTime과 1만큼 증가시킨다.
+
+
+        if(optVolunteerId.isPresent() && optUserId.isPresent()) {
+            VolunteerInfo volunteerInfo = optVolunteerId.get();
+            UserInfo userInfo = optUserId.get();
+
+            if(volunteerInfo.getCompleted()==0)
+            {
+                return "이미 완료된 게시물 입니다.";
+            }
+            else {
+                volunteerInfo.setCompleted(0);
+                volunteerInfo.setWhencompleted(LocalDateTime.now());
+                volunteerInfo.setWhoVol(completedvolDto.getWhoVol());
+                volRepository.save(volunteerInfo);
+
+                userInfo.setVol_hour(userInfo.getVol_hour() + completedvolDto.getVolTime());
+                userInfo.setVol_num(userInfo.getVol_num()+1);
+                userRepository.save(userInfo);
+
+                return "데이터가 정상적으로 업데이트되었습니다.";
+            }
+        }
+        else if(optVolunteerId.isEmpty() && optUserId.isPresent()) {
+            return "봉사 게시물을 찾을 수 없습니다.";
+        }
+        else if(optVolunteerId.isPresent() && optUserId.isEmpty()) {
+            return "사용자 정보를 찾을 수 없습니다.";
+        }
+        else {
+            return "사용자 정보와 봉사 게시물 정보 모두 찾을 수 없습니다. ";
         }
     }
 }

@@ -3,10 +3,14 @@ package com.buddle.UserManager.controller;
 import com.buddle.UserManager.dto.*;
 import com.buddle.UserManager.service.CommentService;
 import com.buddle.UserManager.service.VolService;
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +38,6 @@ public class VolController {
         return volService.checkVolContent(volunteerId);
     }
 
-//    @RequestMapping(value = "/volunteer/register_vol", method = RequestMethod.POST, consumes = "multipart/form-data")
     @PostMapping("/volunteer/register_vol")
     public ResponseDataDto registerVolunteer(@RequestBody VolUploadRequestDto reqDto)
     {
@@ -71,6 +74,12 @@ public class VolController {
         result.put("totalVolunteerCount", totalVolunteerCount);
 
         return result;
+    }
+
+    @PostMapping("/volunteer/when_vol_completed")
+    public String getVolCompletedInfo(@RequestBody VolunteerCompletedRequestDto reqDto)
+    {
+        return volService.uploadVolInfoWhenCompleted(reqDto);
     }
 
 }

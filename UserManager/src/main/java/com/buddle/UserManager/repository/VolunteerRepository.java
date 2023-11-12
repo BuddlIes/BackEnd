@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface VolunteerRepository extends JpaRepository<VolunteerInfo, Long> {
 
     //전체 게시물 리스트 작성된 시간순으로 확인
+    @Query("Select m from VolunteerInfo m where m.completed = 1 order by m.volunteerId")
     List<VolunteerInfo> findAllByOrderByVolunteerId();
 
 
@@ -23,8 +24,8 @@ public interface VolunteerRepository extends JpaRepository<VolunteerInfo, Long> 
 
 
     //사용자가 완료한 봉사 내역 리스트 봉사 시간 순으로 확인
-    @Query("Select m from VolunteerInfo m where m.whoVol = :whoVol and m.completed = 0 order by m.volunteerId")
-    List<VolunteerInfo> findByWhoVolOrderByWriteTime(@Param("whoVol") Long whoVol);
+    @Query("Select m from VolunteerInfo m where m.whoVol = :whoVol and m.completed = 0 order by m.whencompleted")
+    List<VolunteerInfo> findByWhoVolOrderByWhencompleted(@Param("whoVol") Long whoVol);
 
 
     //사용자가 완료한 봉사 활동 시간 다 더하기

@@ -33,6 +33,7 @@ public class VolunteerInfo {
     @Column private Long whoVol; //봉사자
     @Column private Float volTime; //봉사 활동시간 (시간 단위)
     @Column private Integer completed; //완료 0, 미완료 1
+    @Column private LocalDateTime whencompleted; //봉사 완료 시각
 
     @Column private Long likes; //관심 등록 수
 
