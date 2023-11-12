@@ -15,3 +15,5 @@ public interface StampAcquireRepository extends JpaRepository<StampAcquireInfo, 
 
     Long countDistinctByUserNumberEquals(Long user_number);
 }
+
+
