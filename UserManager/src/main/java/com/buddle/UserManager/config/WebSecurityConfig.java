@@ -13,6 +13,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -23,14 +24,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .httpBasic()
-                .disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/login", "/join").permitAll()
-                .anyRequest()
-                .authenticated();
+                .disable();
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/login", "/join","/chat", "/chat/*").permitAll()
+//                .anyRequest()
+//                .authenticated();
 
         http.addFilterAfter(jwtAuthenticationFilter, CorsFilter.class);
     }
