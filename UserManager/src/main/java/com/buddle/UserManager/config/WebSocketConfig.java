@@ -1,26 +1,39 @@
 package com.buddle.UserManager.config;
 
+import com.buddle.UserManager.interceptor.WebSocketInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    //register endpoint
+    private final WebSocketInterceptor webSocketInterceptor;
+
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws") //웹소켓 서버의 엔드포인드 : /ws
-                .setAllowedOrigins("*"); //모든 origin 허용
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/sub");
+        config.setApplicationDestinationPrefixes("/pub");
     }
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
-        // '/sub'가 prefix로 붙은 destination의 클라이언트에게 메시지를 보낼 수 있도록 Simple Broker 등록
-        registry.enableSimpleBroker("/sub");
-        // '/pub'가 prefix로 붙은 메시지들은 @MessageMapping이 붙은 method로 바운드됨
-        registry.setApplicationDestinationPrefixes("/pub");
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+
+        // 연결 URL : ws://localhost:8080/ws-stomp/websocket
+        registry.addEndpoint("/ws-stomp")
+                // .setAllowedOrigins("http://localhost:3000") // "http://localhost:3000" 페이지로부터의 요청만 허용
+                .setAllowedOriginPatterns("**") // 전체 페이지로부터의 요청 허용
+                .setAllowedOrigins("**")
+                .withSockJS();
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(webSocketInterceptor);
     }
 }
