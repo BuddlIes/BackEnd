@@ -19,7 +19,7 @@ public class NFTController {
     public Boolean checkAcquireNFT(@RequestBody NFTRequestDto reqDto){return nftService.checkAcquireNFT(reqDto);}
 
     @PostMapping("nft/acquireNFT")
-    public Object acquireNFT(@RequestBody NFTRequestDto reqDto){return nftService.acquireNFT(reqDto);}
+    public Boolean acquireNFT(@RequestBody NFTRequestDto reqDto){return nftService.acquireNFT(reqDto);}
 
     @GetMapping("nft/get_nft")
     public Object getNFT(@RequestParam Long user_number, @RequestParam Long nft_id) {return nftService.getNFT(user_number, nft_id);}
@@ -29,3 +29,6 @@ public class NFTController {
     public List<NFTResponseDto> getNFTList(@RequestParam Long user_number){return nftService.getNFTList(user_number);}
 
 }
+
+
+

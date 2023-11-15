@@ -4,16 +4,14 @@ import com.buddle.UserManager.dto.*;
 import com.buddle.UserManager.entity.*;
 import com.buddle.UserManager.repository.*;
 import com.buddle.UserManager.security.TokenProvider;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -67,18 +65,11 @@ public class NFTService {
     }
     private Object nftServerGet(NFTRequestDto nftRequestDto) {
 
-        HashMap<String, Object> resultMap = new HashMap<String, Object>();
 
         // 1. 타임아웃 설정시 HttpComponentsClientHttpRequestFactory 객체를 생성합니다.
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-        factory.setConnectTimeout(5000); // 타임아웃 설정 5초
-        factory.setReadTimeout(5000); // 타임아웃 설정 5초
-
-        //Apache HttpComponents : 각 호스트(IP와 Port의 조합)당 커넥션 풀에 생성가능한 커넥션 수
-//            HttpClient httpClient = HttpClientBuilder.create()
-//                    .setMaxConnTotal(50)//최대 커넥션 수
-//                    .setMaxConnPerRoute(20).build();
-//            factory.setHttpClient(httpClient);
+        factory.setConnectTimeout(60000); // 타임아웃 설정 1분
+        factory.setReadTimeout(60000); // 타임아웃 설정 1분
 
         //2. RestTemplate 객체를 생성합니다.
         RestTemplate restTemplate = new RestTemplate(factory);
@@ -88,19 +79,18 @@ public class NFTService {
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         // 4. 요청 URL을 정의해줍니다.
-        String url = "http://52.79.132.18:8080/nft?wallet='" + nftRequestDto.getWallet() + "'&n=" + nftRequestDto.getNft_id().toString();
-        //String url = "http://52.79.132.18:8080/nft?wallet='0x721F63C3c0677C0FBfffA411646041F72f34efB1'&n=1";
+        String url = "http://52.79.132.18:8080/nft?wallet=" + nftRequestDto.getWallet() + "&n=" + nftRequestDto.getNft_id().toString();
 
         // 5. exchange() 메소드로 api를 호출합니다.
-        ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, entity, Object.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
-        // 6. 요청한 결과를 HashMap에 추가합니다.
+        // 6. return
         return response.getBody();
 
     }
 
     /*어떤 NFT를 이 유저가 획득하려고 함*/
-    public Object acquireNFT(NFTRequestDto nftRequestDto) {
+    public Boolean acquireNFT(NFTRequestDto nftRequestDto) {
 
         //nft 획득 가능 여부 조사하기
         if( !checkAcquireNFT(nftRequestDto) ) return false;
@@ -108,18 +98,18 @@ public class NFTService {
         //nft 쪽 API에 지갑주소 넘기고 완료 여부 받아오기
         Object response = nftServerGet(nftRequestDto);
 
-        return response;
-
+        //성공이지 않으면, false 리턴
+        if( !response.toString().contains("Minting successfully") ) return false;
 
         //nft DB에 회득 정보 저장하기
-//        NFTAcquireInfo nftAcquireInfo = new NFTAcquireInfo();
-//        nftAcquireInfo.setNftId(nftRequestDto.getNft_id());
-//        nftAcquireInfo.setUserNumber(nftRequestDto.getUser_number());
-//        nftAcquireInfo.setAcquire_time(LocalDateTime.now());
-//
-//        nftAcquireRepository.save(nftAcquireInfo);
-//
-//        return true;
+        NFTAcquireInfo nftAcquireInfo = new NFTAcquireInfo();
+        nftAcquireInfo.setNftId(nftRequestDto.getNft_id());
+        nftAcquireInfo.setUserNumber(nftRequestDto.getUser_number());
+        nftAcquireInfo.setAcquire_time(LocalDateTime.now());
+
+        nftAcquireRepository.save(nftAcquireInfo);
+
+        return true;
     }
 
     /*어떤 한 NFT에 대한 이 유저의 획득 정보를 조회함*/

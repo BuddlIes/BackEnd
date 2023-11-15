@@ -16,22 +16,19 @@ public class ReviewController {
     ReviewService reviewService;
 
     @PostMapping("/review/apply")
-    public String reviewApply(@RequestBody ReviewRequestDto reqDto)
-    {
-        return reviewService.apply(reqDto);
-    }
+    public String reviewApply(@RequestBody ReviewRequestDto reqDto){return reviewService.apply(reqDto);}
 
     @GetMapping("/review/get_one_review")
-    public ReviewResponseDto getOneReview(@RequestParam ReviewResponseDto reqDto){return reviewService.getOneReview(reqDto);}
+    public ReviewResponseDto getOneReview(@RequestParam Long review_id){return reviewService.getOneReview(review_id);}
 
     @GetMapping("/review/get_review_list_all")
-    public List<ReviewResponseDto> getReviewListAll(@RequestParam ReviewResponseDto reqDto){return reviewService.getReviewListAll(reqDto);}
+    public List<ReviewResponseDto> getReviewListAll(@RequestParam Long user_number){return reviewService.getReviewListAll(user_number);}
 
     @GetMapping("/review/get_review_list_send")
-    public List<ReviewResponseDto> getReviewListSend(@RequestParam ReviewResponseDto reqDto){return reviewService.getReviewListSend(reqDto);}
+    public List<ReviewResponseDto> getReviewListSend(@RequestParam Long user_number){return reviewService.getReviewListSend(user_number);}
 
     @GetMapping("/review/get_review_list_receive")
-    public List<ReviewResponseDto> getReviewListReceive(@RequestParam ReviewResponseDto reqDto){return reviewService.getReviewListReceive(reqDto);}
+    public List<ReviewResponseDto> getReviewListReceive(@RequestParam Long user_number){return reviewService.getReviewListReceive(user_number);}
 
 }
 
