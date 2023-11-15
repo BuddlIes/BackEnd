@@ -5,12 +5,9 @@ import com.buddle.UserManager.entity.StampAcquireInfo;
 import com.buddle.UserManager.entity.StampConstant;
 import com.buddle.UserManager.entity.StampInfo;
 import com.buddle.UserManager.entity.UserInfo;
-import com.buddle.UserManager.repository.StampAcquireRepository;
-import com.buddle.UserManager.repository.StampRepository;
-import com.buddle.UserManager.repository.UserRepository;
+import com.buddle.UserManager.repository.*;
 
 import com.buddle.UserManager.dto.StampResponseDto;
-import com.buddle.UserManager.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +31,12 @@ public class StampService {
     @Autowired
     VolunteerRepository volunteerRepository;
 
+    @Autowired
+    ReviewRepository reviewRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
+
     /*이 스탬프의 획득 조건을 만족하는 지 확인함*/
     public Boolean checkAcquireStamp(StampRequestDto reqDto){
 
@@ -48,6 +51,12 @@ public class StampService {
 
         //post 수 세기
         Long post_number = volunteerRepository.countDistinctByWriterEqualsAndCompletedEquals(optUserInfo.get().getUser_number(), 0);
+
+        //review 수 세기
+        Long review_number = reviewRepository.countBySenderNumberEquals(optUserInfo.get().getUser_number());
+
+        //comment 수 세기
+        Long comment_number = commentRepository.countByWhoCommEquals(optUserInfo.get().getUser_number());
 
         //login 횟수 체크하기
         if( (stamp_type & StampConstant.STAMP_TYPE_LOGIN) > 0) {
@@ -64,6 +73,11 @@ public class StampService {
         }
 
         //comment 횟수 체크하기
+        if( (stamp_type & StampConstant.STAMP_TYPE_COMMENT) > 0){
+            if(comment_number != (optStampInfo.get().getComment_number().intValue())){
+                return false;
+            }
+        }
 
         //봉사자 참여 수 체크하기
         if( (stamp_type & StampConstant.STAMP_TYPE_DO_VOL) > 0) {
@@ -73,6 +87,11 @@ public class StampService {
         }
 
         //review 횟수 체크하기
+        if( (stamp_type & StampConstant.STAMP_TYPE_REVIEW) > 0) {
+            if ( review_number != optStampInfo.get().getReview_number().intValue() ) {
+                return false;
+            }
+        }
 
         return true;
     }

@@ -13,7 +13,7 @@ public class ReviewController {
     @Autowired
     ReviewService reviewService;
 
-    @PostMapping("/review")
+    @PostMapping("/review/apply")
     public String reviewApply(@RequestBody ReviewRequestDto reqDto)
     {
         return reviewService.apply(reqDto);
