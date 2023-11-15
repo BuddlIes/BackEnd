@@ -33,8 +33,6 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.projectlombok:lombok:1.18.22'
-//	testImplementation 'org.projectlombok:lombok:1.18.22'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -58,7 +56,3 @@ bootJar {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-//bootJar {
-//	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-//}
