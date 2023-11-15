@@ -28,6 +28,8 @@ public class StampController {
     public List<StampResponseDto> getStampList(@RequestParam Long user_number){return stampService.getStampList(user_number);
     }
 
+    @GetMapping("stamp/get_stamp_count")
+    public Long getStampCount(@RequestParam Long user_number){return stampService.getStampCount(user_number);}
 
 }
 
