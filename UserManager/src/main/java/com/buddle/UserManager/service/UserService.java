@@ -96,4 +96,13 @@ public class UserService {
         // 존재하지 않을 경우 예외 처리를 추가하거나, 기본값을 반환하도록 수정할 수 있습니다.
         return userInfoOptional.map(UserInfo::getNickname).orElse(null);
     }
+
+    public Double checkTemp(Long userId) {
+        // UserRepository에서 userId에 해당하는 UserInfo를 찾습니다.
+        Optional<UserInfo> userInfoOptional = userRepository.findById(userId);
+
+        // UserInfo가 존재하면 해당 UserInfo의 nickname을 반환합니다.
+        // 존재하지 않을 경우 예외 처리를 추가하거나, 기본값을 반환하도록 수정할 수 있습니다.
+        return userInfoOptional.map(UserInfo::getTemperature).orElse(null);
+    }
 }
