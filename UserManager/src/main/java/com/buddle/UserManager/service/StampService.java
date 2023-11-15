@@ -159,4 +159,11 @@ public class StampService {
 
     }
 
+
+    public Long getStampCount(Long user_number){
+
+        Long stamp_count = stampAcquireRepository.countDistinctByUserNumberEquals(user_number);
+        return stamp_count;
+
+    }
 }
