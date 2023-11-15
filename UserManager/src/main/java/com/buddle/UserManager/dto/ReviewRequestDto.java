@@ -17,7 +17,7 @@ public class ReviewRequestDto {
 
     private ReviewMeasure measure;
     private Long sender_number;
-    private Long reciever_number;
+    private Long receiver_number;
 
 
 }

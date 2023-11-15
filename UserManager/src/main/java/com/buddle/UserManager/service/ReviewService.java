@@ -29,7 +29,7 @@ public class ReviewService {
     /*리뷰를 상대에게 적용하기*/
     public String apply(ReviewRequestDto review) {
 
-        Optional<UserInfo> optRecieverInfo = userRepository.findById(review.getReciever_number());
+        Optional<UserInfo> optRecieverInfo = userRepository.findById(review.getReceiver_number());
         Optional<UserInfo> optSenderInfo = userRepository.findById(review.getSender_number());
 
         //상대방이 존재하지 않는다면 에러 report
@@ -61,7 +61,7 @@ public class ReviewService {
         //reviewInfo repository에 리뷰 추가
         ReviewInfo reviewInfo = new ReviewInfo();
         reviewInfo.setMeasure(review.getMeasure());
-        reviewInfo.setReceiverNumber(review.getReciever_number());
+        reviewInfo.setReceiverNumber(review.getReceiver_number());
         reviewInfo.setSenderNumber(review.getSender_number());
         reviewInfo.setWriteTime(LocalDateTime.now());
 

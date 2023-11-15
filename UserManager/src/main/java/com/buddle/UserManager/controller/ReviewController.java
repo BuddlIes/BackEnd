@@ -3,6 +3,7 @@ package com.buddle.UserManager.controller;
 import com.buddle.UserManager.dto.ReviewRequestDto;
 import com.buddle.UserManager.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,14 @@ public class ReviewController {
     {
         return reviewService.apply(reqDto);
     }
+
+    @GetMapping("/review/get_one_review")
+
+    @GetMapping("/review/get_review_list_all")
+
+    @GetMapping("/review/get_review_list_send")
+
+    @GetMapping("/review/get_review_list_receive")
 }
 
 
