@@ -1,6 +1,7 @@
 package com.buddle.UserManager.service;
 
 import com.buddle.UserManager.dto.ReviewRequestDto;
+import com.buddle.UserManager.dto.ReviewResponseDto;
 import com.buddle.UserManager.entity.ReviewInfo;
 import com.buddle.UserManager.entity.UserInfo;
 import com.buddle.UserManager.repository.ReviewRepository;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 
 import static com.buddle.UserManager.entity.ReviewMeasure.*;
 
@@ -68,5 +69,31 @@ public class ReviewService {
         reviewRepository.save(reviewInfo);
 
         return "Review has Successfully Aplied";
+    }
+
+    public ReviewResponseDto getOneReview(ReviewResponseDto reqDto) {
+
+        ReviewResponseDto reviewResponseDto = new ReviewResponseDto();
+        return reviewResponseDto;
+    }
+
+    public List<ReviewResponseDto> getReviewListAll(ReviewResponseDto reqDto) {
+
+        List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
+        return reviewResponseDtos;
+    }
+
+    public List<ReviewResponseDto> getReviewListSend(ReviewResponseDto reqDto) {
+
+        List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
+        return reviewResponseDtos;
+
+    }
+
+    public List<ReviewResponseDto> getReviewListReceive(ReviewResponseDto reqDto) {
+
+        List<ReviewResponseDto> reviewResponseDtos = new ArrayList<>();
+        return reviewResponseDtos;
+
     }
 }
