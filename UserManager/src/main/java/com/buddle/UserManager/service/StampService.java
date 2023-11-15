@@ -80,6 +80,9 @@ public class StampService {
     /*스탬프 힉득 정보를 DB에 저장함*/
     public Boolean acquireStamp(StampRequestDto reqDto){
 
+        //스탬프의 존재여부 확인
+        if( stampRepository.findById(reqDto.getStamp_id()).isEmpty() ) return false;
+
        // StampAcquireInfo 만들기
         StampAcquireInfo stampAcquireInfo = new StampAcquireInfo();
         stampAcquireInfo.setStampId(reqDto.getStamp_id());
