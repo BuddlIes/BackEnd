@@ -69,6 +69,9 @@ public class VolController {
         String userNickname = userService.checkNickname(whoVol);
         result.put("userNickname", userNickname);
 
+        Double userTemperature = userService.checkTemp(whoVol);
+        result.put("userTemperature", userTemperature);
+
         // 사용자가 완료한 봉사정보 리스트
         List<VolListDto> myVolList = volService.checkMyCompletedVolList(whoVol);
         result.put("completedVolList", myVolList);
