@@ -2,6 +2,7 @@ package com.buddle.UserManager.controller;
 
 import com.buddle.UserManager.dto.*;
 import com.buddle.UserManager.service.CommentService;
+import com.buddle.UserManager.service.UserService;
 import com.buddle.UserManager.service.VolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,9 @@ public class VolController {
 
     @Autowired
     VolService volService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     CommentService commentService;
@@ -60,6 +64,10 @@ public class VolController {
     public Map<String, Object> getMyCompletedVolInfo(@RequestParam Long whoVol)
     {
         Map<String, Object> result = new HashMap<>();
+
+        //사용자의 닉네임
+        String userNickname = userService.checkNickname(whoVol);
+        result.put("userNickname", userNickname);
 
         // 사용자가 완료한 봉사정보 리스트
         List<VolListDto> myVolList = volService.checkMyCompletedVolList(whoVol);

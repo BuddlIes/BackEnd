@@ -29,7 +29,7 @@ public class UserService {
         Optional<UserInfo> optUserEmail = userRepository.findByEmail(users.getEmail());
         Optional<UserInfo> optWallet = userRepository.findByWallet(users.getWallet());
         Optional<UserInfo> optNickname = userRepository.findByNickname(users.getNickname());
-        System.out.println( users.getName());
+        System.out.println(users.getName());
         if(optUserId.isEmpty() && optUserEmail.isEmpty() && optWallet.isEmpty() && optNickname.isEmpty()){ //같은 게 없으면 (회원가입 성공)
 
             //초기 설정
@@ -86,5 +86,14 @@ public class UserService {
         else {
             return new ResponseDataDto("Email is not found", 406, null);
         }
+    }
+
+    public String checkNickname(Long userId) {
+        // UserRepository에서 userId에 해당하는 UserInfo를 찾습니다.
+        Optional<UserInfo> userInfoOptional = userRepository.findById(userId);
+
+        // UserInfo가 존재하면 해당 UserInfo의 nickname을 반환합니다.
+        // 존재하지 않을 경우 예외 처리를 추가하거나, 기본값을 반환하도록 수정할 수 있습니다.
+        return userInfoOptional.map(UserInfo::getNickname).orElse(null);
     }
 }

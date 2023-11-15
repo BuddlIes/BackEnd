@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class ChatMessage {
     private Integer roomSeq;
     private String message;
+    //누가 메세지를 쓰는건지.(학번)
 }
