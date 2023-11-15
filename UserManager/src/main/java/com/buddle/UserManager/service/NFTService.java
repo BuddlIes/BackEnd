@@ -111,15 +111,15 @@ public class NFTService {
 
 
 
-        //안 비어있다면 안 빈 거 리턴
-        nftResponseDto.setNft_id( ((NFTInfo)inner[0]).getNft_id());
-        nftResponseDto.setNft_name( ((NFTInfo)inner[0]).getNft_name());
-        nftResponseDto.setNft_category( ((NFTInfo)inner[0]).getNft_category());
-        nftResponseDto.setDiscount_rate( ((NFTInfo)inner[0]).getDiscount_rate());
-        nftResponseDto.setNeeded_stamp( ((NFTInfo)inner[0]).getNeeded_stamp());
-
-        nftResponseDto.setAcquire_id( ((NFTAcquireInfo)inner[1]).getAcquire_id());
-        nftResponseDto.setAcquire_time( ((NFTAcquireInfo)inner[1]).getAcquire_time());
+//        //안 비어있다면 안 빈 거 리턴
+//        nftResponseDto.setNft_id( ((NFTInfo)inner[0]).getNft_id());
+//        nftResponseDto.setNft_name( ((NFTInfo)inner[0]).getNft_name());
+//        nftResponseDto.setNft_category( ((NFTInfo)inner[0]).getNft_category());
+//        nftResponseDto.setDiscount_rate( ((NFTInfo)inner[0]).getDiscount_rate());
+//        nftResponseDto.setNeeded_stamp( ((NFTInfo)inner[0]).getNeeded_stamp());
+//
+//        nftResponseDto.setAcquire_id( ((NFTAcquireInfo)inner[1]).getAcquire_id());
+//        nftResponseDto.setAcquire_time( ((NFTAcquireInfo)inner[1]).getAcquire_time());
 
         return nftResponseDto;
     }
