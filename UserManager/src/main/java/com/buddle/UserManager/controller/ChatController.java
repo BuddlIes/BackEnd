@@ -32,54 +32,47 @@ public class ChatController {
     @Autowired
     ChatService chatService;
 
-    @GetMapping("/chat/get_room_list")
-    public List<ChatRoomDto> getChatRoomList(@RequestParam Long memberId)
-    {
-        return chatService.checkChatList(memberId);
-    }
-
-    @GetMapping("/chat/get_message_list")
-    public List<MsgDto> getMessageList(@RequestParam Long chatRoomId)
-    {
-        return chatService.checkMsgList(chatRoomId);
-    }
-
-//    @MessageMapping("/chat/send_message")
-//    public void sendMsg(@RequestBody SendMsgDto reqDto, SimpMessageHeaderAccessor accessor)
+//    @GetMapping("/chat/get_room_list")
+//    public List<ChatRoomDto> getChatRoomList(@RequestParam Long memberId)
 //    {
-//        simpMessagingTemplate.convertAndSend("/sub/chat/send_message" + reqDto.getChatroomid(), reqDto);
-//
-////        return chatService.sendMsg(reqDto);
+//        return chatService.checkChatList(memberId);
+//    }
+
+//    @GetMapping("/chat/get_message_list")
+//    public List<MsgDto> getMessageList(@RequestParam Long chatRoomId)
+//    {
+//        return chatService.checkMsgList(chatRoomId);
 //    }
 
 
 
-    @PostMapping("/chat/send_message")
-    public String sendMsg(@RequestBody SendMsgDto reqDto)
-    {
-        return chatService.sendMsg(reqDto);
-    }
+
+//    @PostMapping("/chat/send_message")
+//    public String sendMsg(@RequestBody SendMsgDto reqDto)
+//    {
+//        return chatService.sendMsg(reqDto);
+//    }
 
 
 
-    @MessageMapping("/chat") // "/pub/chat"
-    public void publishChat(ChatMessage chatMessage) {
-        log.info("publishChat : {}", chatMessage);
+//    @MessageMapping("/chat") // "/pub/chat"
+//    public void publishChat(ChatMessage chatMessage) {
+//        log.info("publishChat : {}", chatMessage);
+//
+//        messagingTemplate.convertAndSend("/sub/chat/" + chatMessage.getRoomSeq(), chatMessage);
+//    }
 
-        messagingTemplate.convertAndSend("/sub/chat/" + chatMessage.getRoomSeq(), chatMessage);
-    }
+//    @EventListener(SessionConnectEvent.class)
+//    public void onConnect(SessionConnectEvent event) {
+//        String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
+//        SESSION_IDS.add(sessionId);
+//        log.info("[connect] connections : {}", SESSION_IDS.size());
+//    }
 
-    @EventListener(SessionConnectEvent.class)
-    public void onConnect(SessionConnectEvent event) {
-        String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
-        SESSION_IDS.add(sessionId);
-        log.info("[connect] connections : {}", SESSION_IDS.size());
-    }
-
-    @EventListener(SessionDisconnectEvent.class)
-    public void onDisconnect(SessionDisconnectEvent event) {
-        String sessionId = event.getSessionId();
-        SESSION_IDS.remove(sessionId);
-        log.info("[disconnect] connections : {}", SESSION_IDS.size());
-    }
+//    @EventListener(SessionDisconnectEvent.class)
+//    public void onDisconnect(SessionDisconnectEvent event) {
+//        String sessionId = event.getSessionId();
+//        SESSION_IDS.remove(sessionId);
+//        log.info("[disconnect] connections : {}", SESSION_IDS.size());
+//    }
 }
