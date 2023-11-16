@@ -56,7 +56,7 @@ public class ReviewService {
                 optReceiverInfo.get().setTemperature( optReceiverInfo.get().getTemperature() + 0.2 );
                 break;
             default:
-                break;
+                return "Measure does not exist";
         }
 
         //변경사항을 적용

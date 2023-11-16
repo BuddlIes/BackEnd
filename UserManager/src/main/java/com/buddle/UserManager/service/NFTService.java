@@ -116,7 +116,7 @@ public class NFTService {
     public Object getNFT(Long user_number, Long nft_id){
 
         Optional<NFTInfo> nftInfo = nftRepository.findById(nft_id);
-        Optional<NFTAcquireInfo> nftAcquireInfo = nftAcquireRepository.findByUserNumberAndNftId(user_number, nft_id);
+        Optional<NFTAcquireInfo> nftAcquireInfo = nftAcquireRepository.findDistinctByUserNumberAndNftId(user_number, nft_id);
 
         NFTResponseDto nftResponseDto = new NFTResponseDto();
 

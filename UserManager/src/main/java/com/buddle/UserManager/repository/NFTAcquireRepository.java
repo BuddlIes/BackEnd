@@ -14,5 +14,5 @@ public interface NFTAcquireRepository extends JpaRepository<NFTAcquireInfo, Long
 
     Long countDistinctByUserNumberEquals(Long user_number);
 
-    Optional<NFTAcquireInfo> findByUserNumberAndNftId(Long user_number, Long nft_id);
+    Optional<NFTAcquireInfo> findDistinctByUserNumberAndNftId(Long user_number, Long nft_id);
 }
