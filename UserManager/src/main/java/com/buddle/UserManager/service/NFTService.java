@@ -43,6 +43,10 @@ public class NFTService {
         Optional<UserInfo> optUserInfo = userRepository.findById(nftRequestDto.getUser_number());
         if(optUserInfo.isEmpty()){return false;}
 
+        //NFT를 이미 가지고 있는지 확인
+        Optional<NFTAcquireInfo> optNFTAcquireInfo = nftAcquireRepository.findDistinctByUserNumberAndNftId(nftRequestDto.getUser_number(), nftRequestDto.getNft_id());
+        if(optNFTAcquireInfo.isPresent()) return false;
+
         //이 유저가 쓸 수 있는 스탬프의 수 가져오기
         Long stamp_usable = 0L;
         stamp_usable = stampAcquireRepository.countDistinctByUserNumberEquals(nftRequestDto.getUser_number());
