@@ -34,8 +34,10 @@ public interface VolunteerRepository extends JpaRepository<VolunteerInfo, Long> 
 
 
     //사용자가 완료한 봉사 횟수(completed = 0 넣어서 호출하면 됨)
-    Long countDistinctByWriterEqualsAndCompletedEquals(Long writer, Integer completed);
+    Long countDistinctByWhoVolEqualsAndCompletedEquals(Long whoVol, Integer completed);
 
+    //사용자가 작성한 봉사 게시물 개수
+    Long countDistinctByWriterEquals(Long writer);
 
     //사용자가 완료한 봉사 개수
     @Query("Select COUNT(m) from VolunteerInfo m where m.whoVol = :whoVol and m.completed = 0")

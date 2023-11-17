@@ -5,12 +5,9 @@ import com.buddle.UserManager.entity.StampAcquireInfo;
 import com.buddle.UserManager.entity.StampConstant;
 import com.buddle.UserManager.entity.StampInfo;
 import com.buddle.UserManager.entity.UserInfo;
-import com.buddle.UserManager.repository.StampAcquireRepository;
-import com.buddle.UserManager.repository.StampRepository;
-import com.buddle.UserManager.repository.UserRepository;
+import com.buddle.UserManager.repository.*;
 
 import com.buddle.UserManager.dto.StampResponseDto;
-import com.buddle.UserManager.repository.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +31,16 @@ public class StampService {
     @Autowired
     VolunteerRepository volunteerRepository;
 
+    @Autowired
+    ReviewRepository reviewRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
+
     /*이 스탬프의 획득 조건을 만족하는 지 확인함*/
     public Boolean checkAcquireStamp(StampRequestDto reqDto){
+
+        //stamp_type = 0x|-접속형-|-게시글형-|-댓글형-|-봉사하기형-|-리뷰형-|-기타형-|
 
         //UserInfo 가져오기
         Optional<UserInfo> optUserInfo = userRepository.findById(reqDto.getUser_number());
@@ -44,41 +49,68 @@ public class StampService {
         //StampInfo 가져오기
         Optional<StampInfo> optStampInfo = stampRepository.findById(reqDto.getStamp_id());
         if(optStampInfo.isEmpty()){return false;}
+
+        //이미 유저가 스탬프를 가지고 있는지 확인
+        Optional<StampAcquireInfo> optStampAcquireInfo = stampAcquireRepository.findByUserNumberAndStampId(reqDto.getUser_number(), reqDto.getStamp_id());
+        if(optStampAcquireInfo.isPresent()) return false;
+
         Integer stamp_type = optStampInfo.get().getStamp_type();
 
         //post 수 세기
-        Long post_number = volunteerRepository.countDistinctByWriterEqualsAndCompletedEquals(optUserInfo.get().getUser_number(), 0);
+        Long post_number = volunteerRepository.countDistinctByWriterEquals(optUserInfo.get().getUser_number());
+
+        //do volunteer 수 세기
+        Long do_vol_number = volunteerRepository.countDistinctByWhoVolEqualsAndCompletedEquals(optUserInfo.get().getUser_number(), 0);
+
+        //review 수 세기
+        Long review_number = reviewRepository.countBySenderNumberEquals(optUserInfo.get().getUser_number());
+
+        //comment 수 세기
+        Long comment_number = commentRepository.countByWhoCommEquals(optUserInfo.get().getUser_number());
 
         //login 횟수 체크하기
         if( (stamp_type & StampConstant.STAMP_TYPE_LOGIN) > 0) {
-            if ( (optUserInfo.get().getLogin_num().intValue()) != (optStampInfo.get().getLogin_number().intValue()) ) {
+            if ( (optUserInfo.get().getLogin_num().intValue()) < (optStampInfo.get().getLogin_number()) ) {
                 return false;
             }
         }
 
         //post 횟수 체크하기
         if( (stamp_type & StampConstant.STAMP_TYPE_POST) > 0){
-            if(post_number != (optStampInfo.get().getPost_number().intValue())){
+            if(post_number < (optStampInfo.get().getPost_number())){
                 return false;
             }
         }
 
         //comment 횟수 체크하기
+        if( (stamp_type & StampConstant.STAMP_TYPE_COMMENT) > 0){
+            if(comment_number < (optStampInfo.get().getComment_number())){
+                return false;
+            }
+        }
 
-        //봉사자 참여 수 체크하기
+        //봉사 참여 수 체크하기
         if( (stamp_type & StampConstant.STAMP_TYPE_DO_VOL) > 0) {
-            if ( (optUserInfo.get().getVol_num().intValue()) != (optStampInfo.get().getDo_volunteer_number().intValue()) ) {
+            if ( do_vol_number < (optStampInfo.get().getDo_volunteer_number()) ) {
                 return false;
             }
         }
 
         //review 횟수 체크하기
+        if( (stamp_type & StampConstant.STAMP_TYPE_REVIEW) > 0) {
+            if ( review_number < optStampInfo.get().getReview_number() ) {
+                return false;
+            }
+        }
 
         return true;
     }
 
     /*스탬프 힉득 정보를 DB에 저장함*/
     public Boolean acquireStamp(StampRequestDto reqDto){
+
+        //이 스탬프를 얻을 수 있는지 확인
+        if(!checkAcquireStamp(reqDto)) return false;
 
        // StampAcquireInfo 만들기
         StampAcquireInfo stampAcquireInfo = new StampAcquireInfo();
@@ -97,7 +129,6 @@ public class StampService {
 
         //StampAcquireInfo를 조희해서 이 유저가 이 스탬프를 획득했는지 확인
         Optional<StampAcquireInfo> optStampAcquireInfo = stampAcquireRepository.findByUserNumberAndStampId(user_number, stamp_id);
-        if(optStampAcquireInfo.isEmpty()){ return new StampResponseDto();}
 
         //획득 안했다면 안했음을 알림
         StampResponseDto stampResponseDto = new StampResponseDto();
@@ -162,8 +193,6 @@ public class StampService {
 
     public Long getStampCount(Long user_number){
 
-        Long stamp_count = stampAcquireRepository.countDistinctByUserNumberEquals(user_number);
-        return stamp_count;
-
+        return stampAcquireRepository.countDistinctByUserNumberEquals(user_number);
     }
 }
