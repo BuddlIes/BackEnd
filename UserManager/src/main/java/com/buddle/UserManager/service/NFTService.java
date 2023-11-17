@@ -124,40 +124,59 @@ public class NFTService {
 
         NFTResponseDto nftResponseDto = new NFTResponseDto();
 
-        //만약 nft가 존재하지 않거나, 유저가 획득하지 않았다면 빈 dto를 리턴
-        if(nftInfo.isEmpty()) return nftResponseDto;
-        if(nftAcquireInfo.isEmpty()) return nftResponseDto;
+        //만약 nft가 존재하지 않는다면 빈 것을 리턴
+        if(nftInfo.isEmpty()){
+            return nftResponseDto;
 
-        //안 비어있다면 안 빈 거 리턴
-        nftResponseDto.setNft_id(nftInfo.get().getNft_id());
-        nftResponseDto.setNft_name(nftInfo.get().getNft_name());
-        nftResponseDto.setNft_category(nftInfo.get().getNft_category());
-        nftResponseDto.setDiscount_rate(nftInfo.get().getDiscount_rate());
-        nftResponseDto.setNeeded_stamp(nftInfo.get().getNeeded_stamp());
+        }//유저가 획득하지 않았다면 스탬프의 정보만 리턴
+        else if(nftAcquireInfo.isEmpty()){
 
-        nftResponseDto.setAcquire_id(nftAcquireInfo.get().getAcquire_id());
-        nftResponseDto.setAcquire_time(nftAcquireInfo.get().getAcquire_time());
+            nftResponseDto.setNft_id(nftInfo.get().getNft_id());
+            nftResponseDto.setNft_name(nftInfo.get().getNft_name());
+            nftResponseDto.setNft_category(nftInfo.get().getNft_category());
+            nftResponseDto.setDiscount_rate(nftInfo.get().getDiscount_rate());
+            nftResponseDto.setNeeded_stamp(nftInfo.get().getNeeded_stamp());
+            return nftResponseDto;
 
-        return nftResponseDto;
+        }//유저가 획득했다면 스탬프 정보 + 얻은 정보 리턴
+        else {
+
+            nftResponseDto.setNft_id(nftInfo.get().getNft_id());
+            nftResponseDto.setNft_name(nftInfo.get().getNft_name());
+            nftResponseDto.setNft_category(nftInfo.get().getNft_category());
+            nftResponseDto.setDiscount_rate(nftInfo.get().getDiscount_rate());
+            nftResponseDto.setNeeded_stamp(nftInfo.get().getNeeded_stamp());
+
+            nftResponseDto.setAcquire_id(nftAcquireInfo.get().getAcquire_id());
+            nftResponseDto.setAcquire_time(nftAcquireInfo.get().getAcquire_time());
+            return nftResponseDto;
+        }
     }
 
     /*이 유저가 획득한 NFT 리스트를 조회함*/
     public List<NFTResponseDto> getNFTList(Long user_number){
 
         List<NFTResponseDto> nftResponseDtoList = new ArrayList<>();
-        List<Object[]> nftInfoListWithAcquire = nftRepository.findNFTInfoListWithAcquire(user_number);
+        List<NFTInfo> allNFT = nftRepository.findAll();
 
-        for (Object[] one : nftInfoListWithAcquire) {
+        for (NFTInfo one : allNFT) {
 
             NFTResponseDto nftResponseDto = new NFTResponseDto();
-            nftResponseDto.setNft_id( ((NFTInfo)one[0]).getNft_id() );
-            nftResponseDto.setNft_name( ((NFTInfo)one[0]).getNft_name() );
-            nftResponseDto.setNft_category( ((NFTInfo)one[0]).getNft_category() );
-            nftResponseDto.setDiscount_rate( ((NFTInfo)one[0]).getDiscount_rate() );
-            nftResponseDto.setNeeded_stamp( ((NFTInfo)one[0]).getNeeded_stamp() );
 
-            nftResponseDto.setAcquire_id( ((NFTAcquireInfo)one[1]).getAcquire_id() );
-            nftResponseDto.setAcquire_time( ((NFTAcquireInfo)one[1]).getAcquire_time() );
+            //이 NFT를 user가 가지는지 확인
+            Optional<NFTAcquireInfo> nftAcquireInfo = nftAcquireRepository.findDistinctByUserNumberAndNftId(user_number, one.getNft_id());
+
+            nftResponseDto.setNft_id(one.getNft_id());
+            nftResponseDto.setNft_name(one.getNft_name());
+            nftResponseDto.setNft_category(one.getNft_category());
+            nftResponseDto.setDiscount_rate(one.getDiscount_rate());
+            nftResponseDto.setNeeded_stamp(one.getNeeded_stamp());
+
+            //여기 부분은 null일 수도 있으므로 체크
+            if(nftAcquireInfo.isPresent()) {
+                nftResponseDto.setAcquire_id(nftAcquireInfo.get().getAcquire_id());
+                nftResponseDto.setAcquire_time(nftAcquireInfo.get().getAcquire_time());
+            }
 
             nftResponseDtoList.add(nftResponseDto);
         }
