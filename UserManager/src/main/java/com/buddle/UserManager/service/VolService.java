@@ -160,7 +160,7 @@ public class VolService {
                 volunteerInfo.setWhoVol(completedvolDto.getWhoVol());
                 volRepository.save(volunteerInfo);
 
-                userInfo.setVol_hour(userInfo.getVol_hour() + completedvolDto.getVolTime());
+                userInfo.setVol_hour(userInfo.getVol_hour() + volunteerInfo.getVolTime());
                 userInfo.setVol_num(userInfo.getVol_num()+1);
                 userRepository.save(userInfo);
 
