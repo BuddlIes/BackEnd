@@ -5,6 +5,7 @@ import com.buddle.UserManager.dto.ReviewResponseDto;
 import com.buddle.UserManager.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,10 @@ public class ReviewController {
     ReviewService reviewService;
 
     @PostMapping("/review/apply")
-    public String reviewApply(@RequestBody ReviewRequestDto reqDto){return reviewService.apply(reqDto);}
+    public String reviewApply(@RequestBody ReviewRequestDto reqDto){
+
+        return reviewService.apply(reqDto);
+    }
 
     @GetMapping("/review/get_one_review")
     public ReviewResponseDto getOneReview(@RequestParam Long review_id){return reviewService.getOneReview(review_id);}
