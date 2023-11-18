@@ -127,62 +127,76 @@ public class StampService {
     /*어떤 유저가 어떤 스탬프를 획득한 상태인지 확인하고 그 정보를 리턴함*/
     public StampResponseDto getStamp(Long user_number, Long stamp_id) {
 
-        //StampAcquireInfo를 조희해서 이 유저가 이 스탬프를 획득했는지 확인
+        //스탬프 정보와 스탬프 얻은 정보를 가져오기
         Optional<StampAcquireInfo> optStampAcquireInfo = stampAcquireRepository.findByUserNumberAndStampId(user_number, stamp_id);
+        Optional<StampInfo> optStampInfo = stampRepository.findById(stamp_id);
 
-        //획득 안했다면 안했음을 알림
         StampResponseDto stampResponseDto = new StampResponseDto();
-        if (optStampAcquireInfo.isEmpty()) {
+
+        //스탬프가 존재하지 않는다면 그냥 리턴
+        if(optStampInfo.isEmpty()){
+
+            return stampResponseDto;
+
+        }//획득 안했다면 스탬프 정보만 리턴
+        else if (optStampAcquireInfo.isEmpty()) {
+
+            stampResponseDto.setStamp_id(optStampInfo.get().getStamp_id());
+            stampResponseDto.setStamp_name(optStampInfo.get().getStamp_name());
+            stampResponseDto.setStamp_type(optStampInfo.get().getStamp_type());
+            stampResponseDto.setLogin_number(optStampInfo.get().getLogin_number());
+            stampResponseDto.setPost_number(optStampInfo.get().getPost_number());
+            stampResponseDto.setComment_number(optStampInfo.get().getComment_number());
+            stampResponseDto.setDo_volunteer_number(optStampInfo.get().getDo_volunteer_number());
+            stampResponseDto.setReview_number(optStampInfo.get().getReview_number());
+            return stampResponseDto;
+
+        }//획득 했다면 얻은 정보까지 리턴
+        else
+        {
+            //StampInfo와 StampAcquireInfo를 합쳐서 StampDto로 만들기
+            stampResponseDto.setStamp_id(optStampInfo.get().getStamp_id());
+            stampResponseDto.setStamp_name(optStampInfo.get().getStamp_name());
+            stampResponseDto.setStamp_type(optStampInfo.get().getStamp_type());
+            stampResponseDto.setLogin_number(optStampInfo.get().getLogin_number());
+            stampResponseDto.setPost_number(optStampInfo.get().getPost_number());
+            stampResponseDto.setComment_number(optStampInfo.get().getComment_number());
+            stampResponseDto.setDo_volunteer_number(optStampInfo.get().getDo_volunteer_number());
+            stampResponseDto.setReview_number(optStampInfo.get().getReview_number());
+
+            stampResponseDto.setAcquire_id(optStampAcquireInfo.get().getAcquire_id());
+            stampResponseDto.setAcquire_time(optStampAcquireInfo.get().getAcquire_time());
             return stampResponseDto;
         }
-
-        //획득 했다면 StampInfo를 조회해서 가져옴
-        Optional<StampInfo> optStampInfo = stampRepository.findById(optStampAcquireInfo.get().getStampId());
-        if(optStampInfo.isEmpty()){ return new StampResponseDto();}
-
-        //StampInfo와 StampAcquireInfo를 합쳐서 StampDto로 만들기
-        stampResponseDto.setStamp_id(optStampInfo.get().getStamp_id());
-        stampResponseDto.setStamp_name(optStampInfo.get().getStamp_name());
-        stampResponseDto.setStamp_type(optStampInfo.get().getStamp_type());
-        stampResponseDto.setLogin_number(optStampInfo.get().getLogin_number());
-        stampResponseDto.setPost_number(optStampInfo.get().getPost_number());
-        stampResponseDto.setComment_number(optStampInfo.get().getComment_number());
-        stampResponseDto.setDo_volunteer_number(optStampInfo.get().getDo_volunteer_number());
-        stampResponseDto.setReview_number(optStampInfo.get().getReview_number());
-
-        stampResponseDto.setAcquire_id(optStampAcquireInfo.get().getAcquire_id());
-        stampResponseDto.setAcquire_time(optStampAcquireInfo.get().getAcquire_time());
-
-        //그걸 전달함
-        return stampResponseDto;
-
 
     }
 
     /*어떤 유저의 스탬프들의 획득 여부 정보를 모두 리턴함*/
     public List<StampResponseDto> getStampList(Long user_number) {
 
-        //StampInfo를 조회하되, join으로 StampAcquireInfo를 사용하고, 조건은 user_number == a.user_number
-        List<Object[]> all = stampRepository.findStampInfoListWithAcquire(user_number);
+
+        List<StampInfo> allStamp = stampRepository.findAll();
 
         //StampDto로 만들어서 리턴
         List<StampResponseDto> stampResponseDtoList = new ArrayList<>();
 
-        for (Object[] one : all) {
+        for (StampInfo one : allStamp) {
 
             StampResponseDto stampResponseDto = new StampResponseDto();
-            stampResponseDto.setStamp_id( ((StampInfo)one[0]).getStamp_id() );
-            stampResponseDto.setStamp_name( ((StampInfo)one[0]).getStamp_name() );
-            stampResponseDto.setStamp_type( ((StampInfo)one[0]).getStamp_type() );
-            stampResponseDto.setLogin_number( ((StampInfo)one[0]).getLogin_number() );
-            stampResponseDto.setPost_number( ((StampInfo)one[0]).getPost_number() );
-            stampResponseDto.setComment_number( ((StampInfo)one[0]).getComment_number() );
-            stampResponseDto.setDo_volunteer_number( ((StampInfo)one[0]).getDo_volunteer_number() );
-            stampResponseDto.setReview_number( ((StampInfo)one[0]).getReview_number() );
+            stampResponseDto.setStamp_id(one.getStamp_id());
+            stampResponseDto.setStamp_name(one.getStamp_name());
+            stampResponseDto.setStamp_type(one.getStamp_type());
+            stampResponseDto.setLogin_number(one.getLogin_number());
+            stampResponseDto.setPost_number(one.getPost_number());
+            stampResponseDto.setComment_number(one.getComment_number());
+            stampResponseDto.setDo_volunteer_number(one.getDo_volunteer_number());
+            stampResponseDto.setReview_number(one.getReview_number());
 
-            stampResponseDto.setAcquire_id( ((StampAcquireInfo)one[1]).getAcquire_id() );
-            stampResponseDto.setAcquire_time( ((StampAcquireInfo)one[1]).getAcquire_time() );
-
+            Optional<StampAcquireInfo> stampAcquireInfo = stampAcquireRepository.findByUserNumberAndStampId(user_number, one.getStamp_id());
+            if(stampAcquireInfo.isPresent()) {
+                stampResponseDto.setAcquire_id(stampAcquireInfo.get().getAcquire_id());
+                stampResponseDto.setAcquire_time(stampAcquireInfo.get().getAcquire_time());
+            }
             stampResponseDtoList.add(stampResponseDto);
         }
 

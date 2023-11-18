@@ -88,6 +88,7 @@ public class UserService {
         }
     }
 
+
     public String checkNickname(Long userId) {
         // UserRepository에서 userId에 해당하는 UserInfo를 찾습니다.
         Optional<UserInfo> userInfoOptional = userRepository.findById(userId);

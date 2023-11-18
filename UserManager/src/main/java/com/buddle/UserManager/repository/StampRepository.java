@@ -13,6 +13,8 @@ public interface StampRepository extends JpaRepository<StampInfo, Long> {
 
     Optional<StampInfo> findById(Long stamp_id);
 
+    List<StampInfo> findAll();
+
     @Query("SELECT s, a FROM StampInfo s LEFT OUTER JOIN StampAcquireInfo a ON s.stamp_id = a.stampId WHERE a.userNumber =:user_number")
     List<Object[]> findStampInfoListWithAcquire(@Param("user_number") Long user_number);
 }
