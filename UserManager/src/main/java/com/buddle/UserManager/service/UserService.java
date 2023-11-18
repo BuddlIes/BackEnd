@@ -87,4 +87,11 @@ public class UserService {
             return new ResponseDataDto("Email is not found", 406, null);
         }
     }
+
+    public Double getTemperature(Long user_number) {
+
+        Optional<UserInfo> userInfo = userRepository.findById(user_number);
+        if(userInfo.isEmpty()) return 0.0D;
+        return userInfo.get().getTemperature();
+    }
 }
