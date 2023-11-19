@@ -24,5 +24,7 @@ public class VolListDto {
     private String whenVol; //봉사 요청일시
     private String place; //봉사 요청장소
     private Float volTime; //봉사 활동시간 (시간 단위)
+    private LocalDateTime whenapplied;
+    private LocalDateTime whencompleted;
 
 }

@@ -93,4 +93,22 @@ public class VolController {
         return volService.uploadVolInfoWhenCompleted(reqDto);
     }
 
+    @GetMapping("/volunteer/get_my_applied_volInfo")
+    public Map<String, Object> getMyAppliedVolInfo(@RequestParam Long whoVol)
+    {
+        Map<String, Object> result = new HashMap<>();
+
+        // 사용자가 신청한 봉사정보 리스트
+        List<VolListDto> myVolList = volService.checkMyAppliedVolList(whoVol);
+        result.put("appliedVolList", myVolList);
+
+        return result;
+    }
+
+    @PostMapping("/volunteer/when_vol_applied")
+    public String getVolApplied(@RequestBody VolunteerApplyRequestDto reqDto)
+    {
+        return volService.uploadVolInfoWhenApplied(reqDto);
+    }
+
 }

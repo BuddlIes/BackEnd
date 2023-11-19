@@ -22,13 +22,16 @@ public interface VolunteerRepository extends JpaRepository<VolunteerInfo, Long> 
 
     Optional<VolunteerInfo> findById(Long volunteerId);
 
-    Optional<VolunteerInfo> findByVolTime(Float volTime);
+//    Optional<VolunteerInfo> findByVolTime(Float volTime);
 
 
-    //사용자가 완료한 봉사 내역 리스트 봉사 시간 순으로 확인
+    //사용자가 완료한 봉사 내역 리스트 봉사 완료 시간 순으로 확인
     @Query("Select m from VolunteerInfo m where m.whoVol = :whoVol and m.completed = 0 order by m.whencompleted")
     List<VolunteerInfo> findByWhoVolOrderByWhencompleted(@Param("whoVol") Long whoVol);
 
+    //사용자가 신청한 봉사내역 확인(완료 내역 포함)
+    @Query("Select m from VolunteerInfo m where m.whoVol = :whoVol order by m.whenapplied")
+    List<VolunteerInfo> findByWhoVolOrderByWhenapplied(@Param("whoVol") Long whoVol);
 
     //사용자가 완료한 봉사 활동 시간 다 더하기
     @Query("Select SUM(m.volTime) from VolunteerInfo m where m.whoVol = :whoVol and m.completed = 0")

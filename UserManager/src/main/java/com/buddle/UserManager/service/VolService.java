@@ -33,7 +33,7 @@ public class VolService {
         {
             List<VolunteerInfo> volAllInfos = volRepository.findAllByOrderByVolunteerId();
             List<VolListDto> allVolList = volAllInfos.stream().map(
-                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
+                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime(), m.getWhenapplied(), m.getWhencompleted())
             ).collect(Collectors.toList());
 
             return allVolList;
@@ -42,7 +42,7 @@ public class VolService {
         {
             List<VolunteerInfo> volInfosByHashTag = volRepository.findByHashTagOrderByWriteTime(hashtag);
             List<VolListDto> volListByHashTag = volInfosByHashTag.stream().map(
-                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
+                    m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime(), m.getWhenapplied(), m.getWhencompleted())
             ).collect(Collectors.toList());
 
             return volListByHashTag;
@@ -106,10 +106,54 @@ public class VolService {
         List<VolunteerInfo> myVolList = volRepository.findByWhoVolOrderByWhencompleted(whoVol);
 
         List<VolListDto> myVolDtoList = myVolList.stream().map(
-                m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime())
+                m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime(), m.getWhenapplied(), m.getWhencompleted())
         ).collect(Collectors.toList());
 
         return myVolDtoList;
+    }
+
+    //봉사 신청
+    public String uploadVolInfoWhenApplied(VolunteerApplyRequestDto applyDto) {
+
+        Optional<VolunteerInfo> optVolunteerId = volRepository.findById(applyDto.getVolunteerId());
+        Optional<UserInfo> optUserId = userRepository.findById(applyDto.getWhoVol());
+
+
+        if(optVolunteerId.isPresent() && optUserId.isPresent()) {
+            VolunteerInfo volunteerInfo = optVolunteerId.get();
+
+            if(volunteerInfo.getWhoVol() != 0)
+            {
+                return "이미 다른 사람이 신청한 게시물 입니다.";
+            }
+            else {
+                volunteerInfo.setWhenapplied(LocalDateTime.now());
+                volunteerInfo.setWhoVol(applyDto.getWhoVol());
+                volRepository.save(volunteerInfo);
+
+                return "성공적으로 신청되었습니다.";
+            }
+        }
+        else if(optVolunteerId.isEmpty() && optUserId.isPresent()) {
+            return "봉사 게시물을 찾을 수 없습니다.";
+        }
+        else if(optVolunteerId.isPresent() && optUserId.isEmpty()) {
+            return "사용자 정보를 찾을 수 없습니다.";
+        }
+        else {
+            return "사용자 정보와 봉사 게시물 정보 모두 찾을 수 없습니다. ";
+        }
+    }
+
+    //신청 봉사 확인
+    public List<VolListDto> checkMyAppliedVolList(Long whoVol) {
+        List<VolunteerInfo> myAppliedVolList = volRepository.findByWhoVolOrderByWhenapplied(whoVol);
+
+        List<VolListDto> myAppliedVolDtoList = myAppliedVolList.stream().map(
+                m-> new VolListDto(m.getVolunteerId(),m.getWriter(),m.getHashtag(),m.getTitle(),m.getImg(),m.getWriteTime(), m.getWhenVol(), m.getPlace(), m.getVolTime(), m.getWhenapplied(), m.getWhencompleted())
+        ).collect(Collectors.toList());
+
+        return myAppliedVolDtoList;
     }
 
     public Float checkMyVolTime(Long user) {
