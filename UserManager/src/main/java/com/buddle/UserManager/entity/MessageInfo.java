@@ -16,13 +16,19 @@ import java.time.LocalDateTime;
 @Table(name = "message_info")
 public class MessageInfo {
 
+    public enum MessageType{
+        ENTER, TALK, LEAVE;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
-    private Long id;
+    private Long id; //메세지 아이
 
-    @Column private Long chatroomid;
-    @Lob private String messagecontent;
-    @Column private Long messagefrom; //학번
-    @Column private LocalDateTime createdat;
+    @Column private MessageType type;
+
+    @Column private String roomId;
+    @Lob private String message;
+    @Column private Long sender; //학번
+    @Column private LocalDateTime time;
 }

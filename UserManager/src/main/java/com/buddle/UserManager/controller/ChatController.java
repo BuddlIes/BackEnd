@@ -1,8 +1,6 @@
 package com.buddle.UserManager.controller;
 
 import com.buddle.UserManager.dto.ChatMessage;
-import com.buddle.UserManager.dto.ChatRoomDto;
-import com.buddle.UserManager.dto.MsgDto;
 import com.buddle.UserManager.dto.SendMsgDto;
 import com.buddle.UserManager.service.ChatService;
 import lombok.RequiredArgsConstructor;

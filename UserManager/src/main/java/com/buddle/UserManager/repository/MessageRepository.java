@@ -9,9 +9,9 @@ public interface MessageRepository extends JpaRepository<MessageInfo, Long> {
 
     List<MessageInfo> findAll();
 
-    List<MessageInfo> findTopByChatroomidOrderByIdDesc(Long chatRoom_id);
+//    List<MessageInfo> findTopByChatroomidOrderByIdDesc(Long chatRoom_id);
 
-    List<MessageInfo> findByChatroomidOrderById(Long chatRoom_id);
+//    List<MessageInfo> findByChatroomidOrderById(Long chatRoom_id);
 
 //    @Query("Select m from MessageInfo m where chatRoom_id = chatRoom_id order by m.created_at desc limit 1")
 //    Optional<MessageInfo> findLastMessageFromRoom(@Param("chatRoom_id") Long chatRoom_id);

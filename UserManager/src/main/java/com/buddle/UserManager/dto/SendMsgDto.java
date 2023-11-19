@@ -17,15 +17,15 @@ public class SendMsgDto {
     private String messagecontent;
     private Long messagefrom;
 
-    public MessageInfo toEntity()
-    {
-        MessageInfo msgInfo = new MessageInfo();
-
-        msgInfo.setChatroomid(this.chatroomid);
-        msgInfo.setCreatedat(this.createdat);
-        msgInfo.setMessagecontent(this.messagecontent);
-        msgInfo.setMessagefrom(this.messagefrom);
-
-        return msgInfo;
-    }
+//    public MessageInfo toEntity()
+//    {
+//        MessageInfo msgInfo = new MessageInfo();
+//
+//        msgInfo.setChatroomid(this.chatroomid);
+//        msgInfo.setCreatedat(this.createdat);
+//        msgInfo.setMessagecontent(this.messagecontent);
+//        msgInfo.setMessagefrom(this.messagefrom);
+//
+//        return msgInfo;
+//    }
 }

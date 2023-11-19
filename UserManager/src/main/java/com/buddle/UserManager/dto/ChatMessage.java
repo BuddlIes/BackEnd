@@ -1,14 +1,14 @@
 package com.buddle.UserManager.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class ChatMessage {
     public enum MessageType{
         ENTER, TALK, LEAVE;
