@@ -17,41 +17,64 @@ import javax.security.auth.message.AuthException;
 @Component
 public class WebSocketInterceptor implements ChannelInterceptor {
 
-    private final TokenProvider tokenProvider;
+//    private final TokenProvider tokenProvider;
 
-    @Autowired
-    public WebSocketInterceptor(TokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
-    }
+//    @Override
+//    public void postSend(Message<?> message, MessageChannel channel, boolean sent) {
+//        ChannelInterceptor.super.postSend(message, channel, sent);
+//    }
+//
+//    @Override
+//    public void afterSendCompletion(Message<?> message, MessageChannel channel, boolean sent, Exception ex) {
+//        ChannelInterceptor.super.afterSendCompletion(message, channel, sent, ex);
+//    }
+//
+//    @Override
+//    public void afterReceiveCompletion(Message<?> message, MessageChannel channel, Exception ex) {
+//        ChannelInterceptor.super.afterReceiveCompletion(message, channel, ex);
+//    }
+//
+//    @Override
+//    public Message<?> postReceive(Message<?> message, MessageChannel channel) {
+//        return ChannelInterceptor.super.postReceive(message, channel);
+//    }
+//
+//    @Override
+//    public boolean preReceive(MessageChannel channel) {
+//        return ChannelInterceptor.super.preReceive(channel);
+//    }
+//
+//    @Autowired
+//    public WebSocketInterceptor(TokenProvider tokenProvider) {
+//        this.tokenProvider = tokenProvider;
+//    }
 
     @SneakyThrows
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-
         if (accessor.getCommand() == StompCommand.CONNECT) {
             String authToken = accessor.getFirstNativeHeader("auth-token");
 
-//            if (!"spring-chat-auth-token".equals(authToken)) {
-//                System.out.println("xxxxxxxxxxaabb");
-//                throw new AuthException("fail");
-//
-//            }
-            // Validate the JWT token using the TokenProvider
-            if (authToken != null && tokenProvider.validateAndGetUserId(authToken) != null) {
-                // Token is valid, you can proceed with the connection
-                // You may also want to extract user information from the token if needed
-                String userId = tokenProvider.validateAndGetUserId(authToken);
-                System.out.println("Valid JWT token for user(userId): " + userId);
-                System.out.println("Valid JWT token for user(authToken): " + authToken);
-                System.out.println("Valid JWT token for user(authToken): " + tokenProvider.validateAndGetUserId(authToken));
-            } else {
-                // Invalid token, reject the connection
-                System.out.println("Invalid JWT token");
-                System.out.println("InValid JWT token for user(authToken): " + authToken);
-                System.out.println("InValid JWT token for user(authToken): " + tokenProvider.validateAndGetUserId(authToken));
+            if (!"spring-chat-auth-token".equals(authToken)) {
+                System.out.println("xxxxxxxxxxaabb");
                 throw new AuthException("fail");
             }
+//            // Validate the JWT token using the TokenProvider
+//            if (authToken != null && tokenProvider.validateAndGetUserId(authToken) != null) {
+//                // Token is valid, you can proceed with the connection
+//                // You may also want to extract user information from the token if needed
+//                String userId = tokenProvider.validateAndGetUserId(authToken);
+//                System.out.println("Valid JWT token for user(userId): " + userId);
+//                System.out.println("Valid JWT token for user(authToken): " + authToken);
+//                System.out.println("Valid JWT token for user(authToken): " + tokenProvider.validateAndGetUserId(authToken));
+//            } else {
+//                // Invalid token, reject the connection
+//                System.out.println("Invalid JWT token");
+//                System.out.println("InValid JWT token for user(authToken): " + authToken);
+//                System.out.println("InValid JWT token for user(authToken): " + tokenProvider.validateAndGetUserId(authToken));
+//                throw new AuthException("fail");
+//            }
         }
 
         return message;

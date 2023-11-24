@@ -21,6 +21,4 @@ public class ChatMessage {
     private String message;
     //누가 메세지를 쓰는건지(학번)
     private Long sender;
-    //메세지 전송 시각
-    private LocalDateTime time;
 }
