@@ -1,10 +1,7 @@
 package com.buddle.UserManager.service;
 
 import com.buddle.UserManager.dto.StampRequestDto;
-import com.buddle.UserManager.entity.StampAcquireInfo;
-import com.buddle.UserManager.entity.StampConstant;
-import com.buddle.UserManager.entity.StampInfo;
-import com.buddle.UserManager.entity.UserInfo;
+import com.buddle.UserManager.entity.*;
 import com.buddle.UserManager.repository.*;
 
 import com.buddle.UserManager.dto.StampResponseDto;
@@ -36,6 +33,9 @@ public class StampService {
 
     @Autowired
     CommentRepository commentRepository;
+
+    @Autowired
+    NFTRepository nftRepository;
 
     /*이 스탬프의 획득 조건을 만족하는 지 확인함*/
     public Boolean checkAcquireStamp(StampRequestDto reqDto){
@@ -205,8 +205,23 @@ public class StampService {
     }
 
 
-    public Long getStampCount(Long user_number){
+    public Long getStampCount(Long user_number) {
 
-        return stampAcquireRepository.countDistinctByUserNumberEquals(user_number);
+        //return stampAcquireRepository.countDistinctByUserNumberEquals(user_number);
+        //유저가 존재하는지 확인
+        Optional<UserInfo> optUserInfo = userRepository.findById(user_number);
+        if (optUserInfo.isEmpty()) {
+            return 0L;
+        }
+
+        //이 유저가 쓸 수 있는 스탬프의 수 가져오기
+        Long stamp_usable = 0L;
+        stamp_usable = stampAcquireRepository.countDistinctByUserNumberEquals(user_number);
+        List<Object[]> his_nfts = nftRepository.findNFTInfoListWithAcquire(user_number);
+        for (Object[] one : his_nfts) {
+            stamp_usable = stamp_usable - ((NFTInfo) one[0]).getNeeded_stamp();
+        }
+
+        return stamp_usable;
     }
 }
