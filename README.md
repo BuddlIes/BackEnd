@@ -4,7 +4,7 @@
 
 # 🌿 Buddle 🌿 </br> 교내 장애인 학우를 위한 봉사 활동 장려 웹 개발  
 <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white"/>
-<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=black"/>
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
 <img src="https://img.shields.io/badge/visual%20studio%20code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white"/>
 <img src="https://img.shields.io/badge/IntelliJ%20IDEA%20CE-0000CD?style=for-the-badge&logo=intellijidea&logoColor=white"/>
 <br/><br/>
