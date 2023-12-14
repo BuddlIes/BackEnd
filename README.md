@@ -18,7 +18,7 @@ NFT를 통한 리워드 차등 지급으로 봉사에 대한 참여도를 향상
 # 💚Team BE Members💚
 <img width="200px" src="https://github.com/BuddlIes/FrontEnd/assets/100847440/c4dc8df1-9ef1-40dd-a2bc-177ff4f31991"/> | <img width="200px" src="https://github.com/BuddlIes/FrontEnd/assets/100847440/114a2fda-8af6-488a-a968-e0c1c4a80cf9"/> | 
 |:-----:|:-----:|
-|[소성하](https://github.com/)|[이지은](https://github.com/LeeZEun)|
+|[소성하](https://github.com/soseongha)|[이지은](https://github.com/LeeZEun)|
 |백엔드 개발 및 서기 겸임 👩‍💻|백엔드 개발 및 홍보 겸임 🧑‍💻|
 </div>
 <br/><br/>
