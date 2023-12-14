@@ -129,6 +129,6 @@ close는 이슈를 참조하면서 main 브랜치로 푸시될 때 이슈를 닫
 
 ---
 
-
+<div align="center">
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=9FC700&height=150&section=footer" />
